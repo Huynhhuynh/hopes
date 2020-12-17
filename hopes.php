@@ -30,4 +30,10 @@
   require( HOPES_DIR . '/inc/static.php' );
   require( HOPES_DIR . '/inc/helpers.php' );
   require( HOPES_DIR . '/inc/ajax.php' );
+
+  /**
+   * Admin
+   */
+  require( HOPES_DIR . '/inc/admin/welcome.php' );
+  require( HOPES_DIR . '/inc/admin/custom-post-type.php' );
 }
