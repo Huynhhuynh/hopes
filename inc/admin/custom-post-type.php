@@ -46,6 +46,7 @@ function hopes_register_cause_cpt() {
     'has_archive' => true,
     'hierarchical' => false,
     'menu_position' => null,
+    'show_in_rest' => true,
     'supports' => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt' ],
   ];
 

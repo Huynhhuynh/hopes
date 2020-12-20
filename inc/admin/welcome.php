@@ -13,7 +13,7 @@ function hopes_welcome_page() {
     'manage_options', 
     'hopes-welcome', 
     '',
-    HOPES_URI . '/images/love.svg',
+    HOPES_URI . '/images/ribbons.svg',
     25
   );
 
