@@ -36,4 +36,5 @@
    */
   require( HOPES_DIR . '/inc/admin/welcome.php' );
   require( HOPES_DIR . '/inc/admin/custom-post-type.php' );
+  require( HOPES_DIR . '/inc/admin/custom-tax.php' );
 }

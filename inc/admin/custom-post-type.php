@@ -10,9 +10,9 @@ function hopes_register_cause_cpt() {
   $labels = [
     'name' => _x( 'Causes', 'Post type general name', 'hopes' ),
     'singular_name' => _x( 'Cause', 'Post type singular name', 'hopes' ),
-    'menu_name' => _x( 'Causes', 'Admin Menu text', 'hopes' ),
+    'menu_name' => _x( 'Hopes', 'Admin Menu text', 'hopes' ),
     'name_admin_bar' => _x( 'Cause', 'Add New on Toolbar', 'hopes' ),
-    'add_new' => __( 'Add New', 'hopes' ),
+    'add_new' => __( 'Add Cause', 'hopes' ),
     'add_new_item' => __( 'Add New Cause', 'hopes' ),
     'new_item' => __( 'New Cause', 'hopes' ),
     'edit_item' => __( 'Edit Cause', 'hopes' ),
@@ -36,18 +36,17 @@ function hopes_register_cause_cpt() {
 
   $args = [
     'labels' => $labels,
+    'exclude_from_search' => false,
     'public' => true,
+    'has_archive' => true,
     'publicly_queryable' => true,
     'show_ui' => true,
-    'show_in_menu' => 'hopes-welcome',
-    'query_var' => true,
+    // 'show_in_menu' => 'hopes-welcome',
     'rewrite' => [ 'slug' => 'cause' ],
-    'capability_type' => 'post',
-    'has_archive' => true,
-    'hierarchical' => false,
-    'menu_position' => null,
-    'show_in_rest' => true,
     'supports' => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt' ],
+    'taxonomies' => [ 'cause_tax' ],
+    'menu_position' => 25,
+    'menu_icon' => 'dashicons-superhero-alt',
   ];
 
   register_post_type( 'cause', $args );
