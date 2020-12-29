@@ -13,7 +13,7 @@ function hopes_welcome_page() {
     __( 'Welcome', 'hopes' ), 
     'manage_options', 
     'hopes-welcome',
-    'hope_welcome_page_callback'
+    'hope_welcome_page_callback', 
   );
 }
 
