@@ -121,7 +121,7 @@ eval("\n\nvar isOldIE = function isOldIE() {\n  var memo;\n  return function mem
 /*!*********************!*\
   !*** ./src/main.js ***!
   \*********************/
-eval("\n\n__webpack_require__(/*! ./scss/main.scss */ \"./src/scss/main.scss\");\n\n/**\n * Hopes main javascript\n * \n * @version 1.0.0\n * @package Hopes\n */\n(function (w, $) {\n  'use strict';\n\n  var Ready = function Ready() {};\n  /**\n   * DOM Ready\n   */\n\n\n  $(Ready);\n})(window, jQuery);\n\n//# sourceURL=webpack://hopes/./src/main.js?");
+eval("\n\n__webpack_require__(/*! ./scss/main.scss */ \"./src/scss/main.scss\");\n\n/**\r\n * Hopes main javascript\r\n * \r\n * @version 1.0.0\r\n * @package Hopes\r\n */\n(function (w, $) {\n  'use strict';\n\n  var Ready = function Ready() {};\n  /**\r\n   * DOM Ready\r\n   */\n\n\n  $(Ready);\n})(window, jQuery);\n\n//# sourceURL=webpack://hopes/./src/main.js?");
 }();
 /******/ })()
 ;
