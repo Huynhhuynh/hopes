@@ -1,5 +1,6 @@
 const path = require( 'path' )
 const webpack = require( 'webpack' )
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 
 module.exports = {
   mode: 'development',
@@ -16,7 +17,7 @@ module.exports = {
         test: /\.(sa|sc|c)ss$/,
         use: [
           // Creates `style` nodes from JS strings
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           // Translates CSS into CommonJS
           "css-loader",
           // Compiles Sass to CSS
@@ -44,6 +45,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin( {
+      filename: 'css/hopes.[name].css',
+    } ),
     new webpack.ProvidePlugin( {
       Promise: 'es6-promise-promise', // works as expected
     } )
