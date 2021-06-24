@@ -57,16 +57,14 @@ function hopes_settings_global_add_general_tab( $tabs = [] ) {
         ->set_help_text( __( 'The position of the currency symbol.', 'hopes' ) ),
       Field::make( 'text', 'hopes_currency_thousands_separator', __( 'Thousands Separator', 'hopes' ) )
         ->set_default_value( ',' )
-        ->set_help_text( __( 'The symbol (typically , or .) to separate thousands.', 'hopes' ) )
-        ->set_width( 30 ),
+        ->set_help_text( __( 'The symbol (typically , or .) to separate thousands.', 'hopes' ) ),
       Field::make( 'text', 'hopes_currency_decimal_separator', __( 'Decimal Separator', 'hopes' ) )
         ->set_default_value( '.' )
-        ->set_help_text( __( 'The symbol (usually , or .) to separate decimal points.', 'hopes' ) )
-        ->set_width( 30 ),
+        ->set_help_text( __( 'The symbol (usually , or .) to separate decimal points.', 'hopes' ) ),
       Field::make( 'text', 'hopes_currency_number_of_decimals', __( 'Number of Decimals', 'hopes' ) )
         ->set_default_value( 2 )
         ->set_attribute( 'type', 'number' )
-        ->set_help_text( __( 'The number of decimal points displayed in amounts.', 'hopes' ) )->set_width( 30 ),
+        ->set_help_text( __( 'The number of decimal points displayed in amounts.', 'hopes' ) ),
     ]
   ];
 
@@ -96,4 +94,19 @@ function hopes_settings_global_add_payment_geteways_tab( $tabs = [] ) {
   return $tabs;
 }
 
-add_action( 'hopes/settings_global_tabs', 'hopes_settings_global_add_payment_geteways_tab', 20 );
+add_action( 'hopes/settings_global_tabs', 'hopes_settings_global_add_payment_geteways_tab', 12 );
+
+function hopes_settings_global_email_tab( $tabs = [] ) {
+
+  $email_system_settings = [
+    'name' => __( 'Email', 'hopes' ),
+    'fields' => [
+
+    ]
+  ];
+
+  array_push( $tabs, apply_filters( 'hopes/settings_global_email_system_tabs', $email_system_settings ) );
+  return $tabs;
+}
+
+add_action( 'hopes/settings_global_tabs', 'hopes_settings_global_email_tab', 14 );
