@@ -56,6 +56,36 @@ function hopes_get_select_option_currency() {
   return $options;
 }
 
+/**
+ * 
+ */
+function hopes_set_default_email_template_global_settings() {
+  return [
+    [
+      'enable' => true,
+      'email_action' => 'DONOR_DONATION_SUCCESSFUL',
+      'email_subject' => __( 'Donation Receipt', 'hopes' ),
+      'email_header' => __( 'Donation Receipt', 'hopes' ),
+      'email_message' => '<p>Dear {name},</p>
+
+      <p>Thank you for your donation. Your generosity is appreciated! Here are the details of your donation:</p>
+      
+      <p>Donor: {fullname}<br />
+      Donation: {donation}<br />
+      Donation Date: {date}<br />
+      Amount: {amount}<br />
+      Payment Method: {payment_method}<br />
+      Payment ID: {payment_id}</p>
+      
+      <p>{receipt_link}</p>
+      
+      <p>Sincerely,<br />
+      {sitename}</p>',
+      'email_recipients' => ''
+    ],
+  ];
+}
+
 add_action( 'init', function() {
   if( ! isset( $_GET[ 'dev' ] ) ) return;
   hopes_get_select_option_currency();

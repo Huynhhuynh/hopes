@@ -101,7 +101,50 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
   $email_system_settings = [
     'name' => __( 'Email', 'hopes' ),
     'fields' => [
-
+      Field::make( 'separator', 'hopes_email_donor_separator', __( 'Email Settings', 'hopes' ) ),
+      Field::make( 'complex', 'hopes_email_template', __( 'Email Template Settings', 'hopes' ) )
+        ->add_fields( [
+          Field::make( 'checkbox', 'enable', __( 'Enable', 'hopes' ) )
+            ->set_default_value( true )
+            ->set_help_text( __( 'Choose whether you want this email enabled or not.', 'hopes' ) ),
+          Field::make( 'select', 'email_action', __( 'Action', 'hopes' ) )
+            ->set_options( [
+              '' => __( '--- Select Action ---', 'hopes' ),
+              'DONOR_DONATION_SUCCESSFUL' => __( 'Donor — Donation Successful', 'hopes' ),
+              'DONOR_OFFLINE_DONATION_INSTRUCTIONS' => __( 'Donor — Offline Donation Instructions', 'hopes' ),
+              'DONOR_REGISTRATION_INFORMATION' => __( 'Donor — Registration Information', 'hopes' ),
+              'DONOR_CONFIRM_EMAIL' => __( 'Donor — Confirm Email (After register user)', 'hopes' ),
+              'ADMIN_NEW_DONATION' => __( 'Admin — New Donation', 'hopes' ),
+              'ADMIN_NEW_OFFLINE_DONATION' => __( 'Admin — New Offline Donation', 'hopes' ),
+              'ADMIN_NEW_USER_REGISTRATION' => __( 'Admin — New User Registration', 'hopes' ),
+            ] )
+            ->set_required( true )
+            ->set_help_text( __( 'Choose action', 'hopes' ) ),
+          Field::make( 'text', 'email_subject', __( 'Email Subject', 'hopes' ) )
+            ->set_help_text( __( 'Enter the email subject line.', 'hopes' ) )
+            ->set_required( true ),
+          Field::make( 'text', 'email_header', __( 'Email Header', 'hopes' ) )
+            ->set_help_text( __( 'Enter the email header that appears at the top of the email.', 'hopes' ) ),
+          Field::make( 'rich_text', 'email_message', __( 'Email Message', 'hopes' ) ),
+          Field::make( 'text', 'email_recipients', __( 'Email Recipients', 'hopes' ) )
+            ->set_conditional_logic( [
+              [
+                'field' => 'email_action',
+                'value' => [ 
+                  'ADMIN_NEW_DONATION', 
+                  'ADMIN_NEW_OFFLINE_DONATION', 
+                  'ADMIN_NEW_USER_REGISTRATION' ],
+                'compare' => 'IN'
+              ]
+            ] )
+            ->set_help_text( __( 'Enter the email address(es) that should receive a notification. (Exam: admin1@gmail.com, admin2@gmail.com)', 'hopes' ) )
+            ->set_default_value( get_option( 'admin_email' ) ),
+        ] )
+        ->set_default_value( hopes_set_default_email_template_global_settings() )
+        ->set_header_template( '
+        <% if (email_subject) { %>
+          <%- email_subject %> (<%- email_action %>) <%- enable ? `🟢` : `🔴` %>
+        <% } %>' )
     ]
   ];
 
