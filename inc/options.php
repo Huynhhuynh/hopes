@@ -98,26 +98,25 @@ add_action( 'hopes/settings_global_tabs', 'hopes_settings_global_add_payment_get
 
 function hopes_settings_global_email_tab( $tabs = [] ) {
 
+  $email_action_opts = array_merge( [
+    '' => __( '--- Select Action ---', 'hopes' ),
+  ], hopes_make_options_field( hopes_email_actions_register(), [
+    'field_value' => 'action',
+    'field_label' => 'label'
+  ] ) );
+
   $email_system_settings = [
     'name' => __( 'Email', 'hopes' ),
     'fields' => [
       Field::make( 'separator', 'hopes_email_donor_separator', __( 'Email Settings', 'hopes' ) ),
       Field::make( 'complex', 'hopes_email_template', __( 'Email Template Settings', 'hopes' ) )
+        ->set_layout( 'tabbed-vertical' )
         ->add_fields( [
           Field::make( 'checkbox', 'enable', __( 'Enable', 'hopes' ) )
             ->set_default_value( true )
             ->set_help_text( __( 'Choose whether you want this email enabled or not.', 'hopes' ) ),
           Field::make( 'select', 'email_action', __( 'Action', 'hopes' ) )
-            ->set_options( [
-              '' => __( '--- Select Action ---', 'hopes' ),
-              'DONOR_DONATION_SUCCESSFUL' => __( 'Donor — Donation Successful', 'hopes' ),
-              'DONOR_OFFLINE_DONATION_INSTRUCTIONS' => __( 'Donor — Offline Donation Instructions', 'hopes' ),
-              'DONOR_REGISTRATION_INFORMATION' => __( 'Donor — Registration Information', 'hopes' ),
-              'DONOR_CONFIRM_EMAIL' => __( 'Donor — Confirm Email (After register user)', 'hopes' ),
-              'ADMIN_NEW_DONATION' => __( 'Admin — New Donation', 'hopes' ),
-              'ADMIN_NEW_OFFLINE_DONATION' => __( 'Admin — New Offline Donation', 'hopes' ),
-              'ADMIN_NEW_USER_REGISTRATION' => __( 'Admin — New User Registration', 'hopes' ),
-            ] )
+            ->set_options( $email_action_opts )
             ->set_required( true )
             ->set_help_text( __( 'Choose action', 'hopes' ) ),
           Field::make( 'text', 'email_subject', __( 'Email Subject', 'hopes' ) )
@@ -142,8 +141,15 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
         ] )
         ->set_default_value( hopes_set_default_email_template_global_settings() )
         ->set_header_template( '
-        <% if (email_subject) { %>
-          <%- email_subject %> (<%- email_action %>) <%- enable ? `🟢` : `🔴` %>
+        <% 
+          var __email_actions_register = '. wp_json_encode( hopes_email_actions_register() ) .';
+          console.log( __email_actions_register )
+        %>
+        <% if (email_action) { %>
+          <% 
+            var __email_action_name = __email_actions_register.find( o => { return o.action == email_action } )
+          %>
+          <%- enable ? `🟢` : `🔴` %> <%- __email_action_name?.name %> (Subject: <%- email_subject %>)
         <% } %>' )
     ]
   ];
