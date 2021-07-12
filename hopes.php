@@ -14,6 +14,11 @@
  * Domain Path:       /languages
  */
 
+/**
+ * Vendor
+ */
+require( __DIR__ . '/vendor/autoload.php' );
+
 {
   /**
    * Define
@@ -34,7 +39,17 @@
   /**
    * Admin
    */
+  require( HOPES_DIR . '/inc/options.php' );
   require( HOPES_DIR . '/inc/admin/welcome.php' );
   require( HOPES_DIR . '/inc/admin/custom-post-type.php' );
   require( HOPES_DIR . '/inc/admin/custom-tax.php' );
 }
+
+/**
+ * Hopes boot
+ */
+function hopes_boot() {
+  \Carbon_Fields\Carbon_Fields::boot();
+}
+
+add_action( 'after_setup_theme', 'hopes_boot' );
