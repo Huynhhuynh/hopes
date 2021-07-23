@@ -8,7 +8,7 @@ use Carbon_Fields\Field;
 /**
  * Register global settings panel
  */
-function crb_attach_theme_options() {
+function hopes_global_options() {
 
   $settings_global_tabs = apply_filters( 'hopes/settings_global_tabs', [] );
 
@@ -23,7 +23,7 @@ function crb_attach_theme_options() {
   add_action( 'hopes/settings_global_object', $hopes_settings_object );
 }
 
-add_action( 'carbon_fields_register_fields', 'crb_attach_theme_options' );
+add_action( 'carbon_fields_register_fields', 'hopes_global_options' );
 
 /**
  * Global general settings tab
@@ -79,14 +79,17 @@ function hopes_settings_global_add_payment_geteways_tab( $tabs = [] ) {
   $payment_gateways_settings = [
     'name' => __( 'Payment Gateways', 'hopes' ),
     'fields' => [
-      Field::make( 'select', 'crb_select', __( 'Choose Options' ) )
-        ->set_options( array(
-          '1' => 1,
-          '2' => 2,
-          '3' => 3,
-          '4' => 4,
-          '5' => 5,
+      Field::make( 'complex', 'hopes_paypal_method', __( 'Slider' ) )
+        ->set_max( 1 )
+        ->add_fields( array(
+          Field::make( 'text', 'title', __( 'Slide Title' ) ),
+          Field::make( 'image', 'photo', __( 'Slide Photo' ) ),
         ) )
+        ->set_default_value( [
+          [
+            'title' => 'title',
+          ]
+        ] )
     ]
   ];
 
@@ -108,7 +111,17 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
   $email_system_settings = [
     'name' => __( 'Email', 'hopes' ),
     'fields' => [
-      Field::make( 'separator', 'hopes_email_donor_separator', __( 'Email Settings', 'hopes' ) ),
+      Field::make( 'separator', 'hopes_email_settings_separator', __( 'Email Settings', 'hopes' ) ),
+      Field::make( 'image', 'hopes_email_global_logo', __( 'Email Logo', 'hopes' ) )
+        ->set_help_text( __( 'Select email logo.', 'hopes' ) ),
+      Field::make( 'text', 'hopes_email_global_from_name', __( 'From Name', 'hopes' )  )
+        ->set_default_value( get_bloginfo( 'name' ) )
+        ->set_help_text( __( 'The name which appears in the "From" field in all Hopes donation emails.', 'hopes' ) ),
+      Field::make( 'text', 'hopes_email_global_from_email', __( 'From Email', 'hopes' )  )
+        ->set_default_value( get_option( 'admin_email' ) )
+        ->set_help_text( __( 'Email address from which all Hopes emails are sent from. This will act as the "from" and "reply-to" email address.
+        ', 'hopes' ) ),
+      Field::make( 'separator', 'hopes_email_template_separator', __( 'Email Template', 'hopes' ) ),
       Field::make( 'complex', 'hopes_email_template', __( 'Email Template Settings', 'hopes' ) )
         ->set_layout( 'tabbed-vertical' )
         ->add_fields( [
@@ -143,13 +156,12 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
         ->set_header_template( '
         <% 
           var __email_actions_register = '. wp_json_encode( hopes_email_actions_register() ) .';
-          console.log( __email_actions_register )
         %>
         <% if (email_action) { %>
           <% 
             var __email_action_name = __email_actions_register.find( o => { return o.action == email_action } )
           %>
-          <%- enable ? `🟢` : `🔴` %> <%- __email_action_name?.name %> (Subject: <%- email_subject %>)
+          <%- enable ? `🟢` : `🔴` %> <%- __email_action_name?.label %>
         <% } %>' )
     ]
   ];

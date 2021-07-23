@@ -1,0 +1,103 @@
+<?php 
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
+
+/**
+ * Cause custom meta fields
+ * 
+ */
+
+function hopes_cause_meta_options() {
+  Container::make( 'post_meta', __( 'Cause Settings', 'hopes' ) )
+    ->where( 'post_type', '=', 'cause' )
+    ->add_tab( __( 'General', 'hopes' ), array(
+      Field::make( 'radio', 'cause_donation_option', __( 'Donation Option', 'hopes' ) )
+        ->set_options( [
+          'multi-level-donation' => __( 'Multi-level Donation', 'hopes' ),
+          'set-donation' => __( 'Set Donation', 'hopes' ),
+        ] )
+        ->set_default_value( 'multi-level-donation' )
+        ->set_help_text( __( 'Do you want this form to have one set donation price or multiple levels (for example, $10, $20, $50)?', 'hopes' ) ),
+      Field::make( 'text', 'cause_amount_donation', __( 'Set Amount Donation', 'hopes' ) )
+        ->set_default_value( 5 )
+        ->set_attribute( 'type', 'number' )
+        ->set_help_text( __( 'This is the set donation amount for this cause. If you have a "Custom Amount Minimum" set, make sure it is less than this amount.', 'hopes' ) )
+        ->set_conditional_logic( [
+          [
+            'field' => 'cause_donation_option',
+            'value' => 'set-donation'
+          ]
+        ] ),
+      Field::make( 'checkbox', 'couse_custom_amount', __( 'Enable Custom Amount', 'hopes' ) )
+        ->set_default_value( true )
+        ->set_help_text( __( 'Do you want the user to be able to input their own donation amount?' ) )
+        ->set_width( 25 ),
+      Field::make( 'text', 'cause_min_amount_limit', __( 'Minimum Amount', 'hopes' ) )
+        ->set_default_value( 5 )
+        ->set_attribute( 'type', 'number' )
+        ->set_width( 25 )
+        ->set_help_text( __( 'Set the minimum amount for all gateways.', 'hopes' ) )
+        ->set_conditional_logic( [
+          [
+            'field' => 'couse_custom_amount',
+            'value' => true
+          ]
+        ] ),
+      Field::make( 'text', 'cause_max_amount_limit', __( 'Maximum Amount', 'hopes' ) )
+        ->set_default_value( 100 )
+        ->set_attribute( 'type', 'number' )
+        ->set_width( 25 )
+        ->set_help_text( __( 'Set the maximum amount for all gateways.', 'hopes' ) )
+        ->set_conditional_logic( [
+          [
+            'field' => 'couse_custom_amount',
+            'value' => true
+          ]
+        ] ),
+      Field::make( 'text', 'cause_custom_amount_text', __( 'Custom Amount Text', 'hopes' ) )
+        ->set_default_value( __( 'Custom Amount', 'hopes' ) )
+        ->set_help_text( __( 'This text appears as a label below the custom amount field for set donation cause.', 'hopes' ) )
+        ->set_width( 25 )
+        ->set_conditional_logic( [
+          [
+            'field' => 'couse_custom_amount',
+            'value' => true
+          ]
+        ] ),
+      Field::make( 'complex', 'cause_donation_amount_levels', __( 'Donation Amount Levels', 'hopes' ) )
+        ->set_layout( 'tabbed-vertical' )
+        ->add_fields( [
+          Field::make( 'text', 'amount', __( 'Amount', 'hopes' ) )
+            ->set_attribute( 'type', 'number' )
+            ->set_help_text( __( 'Enter amount for this level.' ) )
+            ->set_required( true ),
+          Field::make( 'text', 'text', __( 'Text', 'hopes' ) )
+            ->set_help_text( __( 'Enter label for this level.' ) ),
+        ] )
+        ->set_default_value( [
+          [
+            'amount' => 5,
+            'text' => __( 'Silver', 'hopes' )
+          ],
+          [
+            'amount' => 10,
+            'text' => __( 'Gold', 'hopes' )
+          ],
+          [
+            'amount' => 20,
+            'text' => __( 'Diamond', 'hopes' )
+          ],
+        ] )
+        ->set_help_text( __( 'Default the selected is first item.', 'hopes' ) )
+        ->set_header_template( '
+        <% if ( amount ) { %>
+          Donation Level <%- $_index + 1 %>: <%- text %> (<%- amount %>)
+        <% } %>' ),
+    ) )
+    ->add_tab( __( 'Notification' ), array(
+        Field::make( 'text', 'crb_email', __( 'Notification Email' ) ),
+        Field::make( 'text', 'crb_phone', __( 'Phone Number' ) ),
+    ) );
+}
+
+add_action( 'carbon_fields_register_fields', 'hopes_cause_meta_options' );
