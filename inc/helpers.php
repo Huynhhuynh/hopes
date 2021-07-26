@@ -7,16 +7,47 @@
  */
 
 /**
- * Load template 
+ * Tempalte path apply filter 
  * 
- * @since 1.0
- * @version 1.0
+ * @param String $full_path 
+ * @param String $path 
  * 
- * @param String $path
+ * @return String
  */
-function hopes_template( $path = null ) {
-  if( empty( $path ) ) return; 
-  $root_path = HOPES_DIR . '/templates/';
+function hopes_template_path_apply_filter( $full_path = '', $path = '' ) {
+  return apply_filters( 'hopes_hook_template_path__' . $path, $full_path );
+}
+
+/**
+ * Template path 
+ * 
+ * @param String $path 
+ * @param Boolean $require
+ * 
+ * @return String 
+ */
+function hopes_template_path( $path ) {
+  $root_template = HOPES_DIR . '/templates/';
+  $root_theme_template = get_template_directory() . '/hopes/';
+  $root_childtheme_template = get_stylesheet_directory() . '/hopes/';
+
+  # In child theme
+  if( file_exists( $root_childtheme_template . $path ) ) {
+    return hopes_template_path_apply_filter( $root_childtheme_template . $path, $path );
+  }
+
+  # In parent theme
+  if( file_exists( $root_theme_template . $path ) ) {
+    return hopes_template_path_apply_filter( $root_theme_template . $path, $path );
+  }
+
+  # In plugin
+  if( file_exists( $root_template . $path ) ) {
+    return hopes_template_path_apply_filter( $root_template . $path, $path );
+  }
+
+  # Template not exits!
+  return;
 }
 
 /**
@@ -246,12 +277,39 @@ function hopes_set_default_email_template_global_settings() {
   ];
 }
 
-add_action( 'init', function() {
-  if( ! isset( $_GET[ 'dev' ] ) ) return;
-  $email_action_opts = hopes_make_options_field( hopes_email_actions_register(), [
-    'field_value' => 'action',
-    'field_label' => 'label'
-  ] );
+/**
+ * Custom single template cause
+ * 
+ * @param String $template
+ */
+function hopes_cause_custom_single_template( $template ) {
+  if ( is_singular( 'cause' ) ) {
+    $template = hopes_template_path( 'single-cause.php' );
+  }
+  return $template;
+}
 
-  print_r( $email_action_opts );
-} );
+/**
+ * Cause single heading template
+ * 
+ * @param Int $post_id
+ */
+function hopes_cause_single_heading_template( $post_id ) {
+
+  // return if not exists
+  if( ! has_post_thumbnail( $post_id ) ) return;
+
+  $featured_image_html = get_the_post_thumbnail( $post_id, 'full' ); 
+  set_query_var( 'featured_image_html', $featured_image_html );
+
+  load_template( hopes_template_path( 'cause-heading.php' ), false );
+}
+
+/**
+ * Cause single entry template
+ * 
+ * @param Int $post_id
+ */
+function hopes_cause_single_entry_template( $post_id ) {
+  load_template( hopes_template_path( 'cause-entry.php' ), false );
+}

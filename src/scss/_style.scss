@@ -1,6 +1,5 @@
-body {
-  
-  div {
-    color: black;
-  }
-} 
+.site-container {
+  width: $site-container-width;
+  max-width: calc(100% - 30px);
+  margin: 0 auto;
+}
