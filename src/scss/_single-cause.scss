@@ -1,0 +1,27 @@
+.single {
+
+  article.cause  {
+
+    .cause-entry-container {
+      display: flex;
+      flex-wrap: wrap;
+
+
+    }
+
+    .cause-heading {
+      width: 100%;
+      margin-bottom: 3em;
+    }
+
+    .cause-entry-container {
+      width: 70%;
+      
+      .post-title {
+        margin-top: 6px;
+        margin-bottom: 14px;
+      }
+    }
+  }
+}
+

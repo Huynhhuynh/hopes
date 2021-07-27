@@ -73,12 +73,25 @@ function hopes_get_select_option_page() {
 }
 
 /**
- * Select option currency
+ * Get currency
+ * 
  */
-function hopes_get_select_option_currency() {
+function hopes_get_currency( $currency = '' ) {
   $json = file_get_contents( __DIR__ . '/lib/common-currency.json' );
   $all_currency = json_decode( $json, true );
 
+  if( empty( $currency ) ) {
+    return $all_currency;
+  } else {
+    return isset( $all_currency[ $currency ] ) ? $all_currency[ $currency ] : null;
+  }
+}
+
+/**
+ * Select option currency
+ */
+function hopes_get_select_option_currency() {
+  $all_currency = hopes_get_currency();
   $options = [];
   foreach( $all_currency as $key => $c ) {
     $options[ $key ] = "{$c[ 'name' ]} ({$c[ 'symbol_native' ]})";
@@ -313,3 +326,97 @@ function hopes_cause_single_heading_template( $post_id ) {
 function hopes_cause_single_entry_template( $post_id ) {
   load_template( hopes_template_path( 'cause-entry.php' ), false );
 }
+
+/**
+ * Get total donate by cause id 
+ * 
+ * @param Int $cause_id
+ * @return Int 
+ */
+function hopes_cause_get_total_donate(  $cause_id = 0 ) {
+  // query here!
+
+  return 400; // exam return 400 
+}
+
+/**
+ * Get price 
+ * 
+ * @param Int $num
+ * @return String 
+ */
+function hopes_get_price( $num = 0 ) {
+  $currency_opts = [
+    'currency' => hopes_get_currency( carbon_get_theme_option( 'hopes_currency' ) ),
+    'position' => carbon_get_theme_option( 'hopes_currency_position' ),
+    'thousands_separator' => carbon_get_theme_option( 'hopes_currency_thousands_separator' ),
+    'decimal_separator' => carbon_get_theme_option( 'hopes_currency_decimal_separator' ),
+    'number_of_decimals' => carbon_get_theme_option( 'hopes_currency_number_of_decimals' ),
+  ];
+
+  if( $currency_opts[ 'currency' ] === null ) {
+    return;
+  }
+
+  $currency_pos_temp = [
+    'before' => '{symbol}{number}',
+    'after' => '{number}{symbol}'
+  ];
+
+  $replace_map = [
+    '{symbol}' => $currency_opts[ 'currency' ][ 'symbol' ],
+    '{number}' => number_format( 
+      (float) $num, 
+      (int) $currency_opts[ 'number_of_decimals' ], 
+      $currency_opts[ 'decimal_separator' ], 
+      $currency_opts[ 'thousands_separator' ] ),
+  ];
+
+  return str_replace( 
+    array_keys( $replace_map ), 
+    array_values( $replace_map ), 
+    $currency_pos_temp[ $currency_opts[ 'position' ] ] );
+}
+
+/**
+ * Get percent 
+ * 
+ * @param Float $target
+ * @param Float $achieved
+ * 
+ * @return Float 
+ */
+function hopes_get_percent( $target = 0, $achieved = 0 ) {
+  $percent = number_format( ($achieved / $target ) * 100, 2, '.', ',' );
+  return $percent > 100 ? 100 : $percent;
+}
+
+
+/**
+ * Cause donation process
+ * 
+ * @param Int $post_id
+ * @return Void
+ */
+function hopes_cause_donate_process_template( $post_id ) {
+
+  $target = carbon_get_post_meta( $post_id, 'couse_target_donation_amount' );
+  $total = hopes_cause_get_total_donate( $post_id );
+
+  $cause_meta_data = [
+    'done' => false,
+    'target_donate' => $target,
+    'total_donated' => $total,
+    'percent' => hopes_get_percent( $target, $total ),
+    'goal_achieved_message' => carbon_get_post_meta( $post_id, 'cause_goal_achieved_message' ),
+  ];
+
+  set_query_var( 'cause_meta_data', $cause_meta_data );
+  load_template( hopes_template_path( 'cause-donate-process.php' ), false );
+}
+
+// add_action( 'hopes/single-cause-after-title', function() {
+//   echo '<pre>';
+//   echo hopes_get_price( 10 );
+//   echo '</pre>';
+// } );

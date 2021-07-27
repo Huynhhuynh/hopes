@@ -48,11 +48,10 @@ function hopes_register_cause_cpt() {
     'supports' => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt' ],
     'taxonomies' => [ 'cause_tax' ],
     'menu_position' => 25,
-    'menu_icon' => 'dashicons-superhero-alt',
     'menu_icon' => 'data:image/svg+xml;base64,' . base64_encode( $icon ),
   ];
 
-  register_post_type( 'cause', $args );
+  register_post_type( 'hopes-cause', $args );
 }
 
 add_action( 'init', 'hopes_register_cause_cpt' );

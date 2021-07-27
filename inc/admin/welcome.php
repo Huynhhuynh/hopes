@@ -8,7 +8,7 @@
 
 function hopes_welcome_page() {
   add_submenu_page( 
-    'edit.php?post_type=cause', 
+    'edit.php?post_type=hopes-cause', 
     __( 'Welcome Hopes', 'hopes' ), 
     __( 'Welcome', 'hopes' ), 
     'manage_options', 

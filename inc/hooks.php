@@ -13,5 +13,7 @@
 
   add_action( 'hope/single-cause', 'hopes_cause_single_heading_template', 10 );
   add_action( 'hope/single-cause', 'hopes_cause_single_entry_template', 14 );
+
+  add_action( 'hopes/single-cause-after-title', 'hopes_cause_donate_process_template', 20 );
 }
 

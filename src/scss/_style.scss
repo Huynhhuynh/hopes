@@ -3,3 +3,33 @@
   max-width: calc(100% - 30px);
   margin: 0 auto;
 }
+
+.donate-process {
+
+  &__text {
+    margin-bottom: .5em;
+  }
+
+  &__bar {
+    width: 100%;
+    
+    .__bar,
+    .__bar_highlight {
+      border-radius: 20px;
+    }
+
+    .__bar {
+      width: 100%;
+      position: relative;
+      background: #ededed;
+      line-height: 0;
+  
+      .__bar_highlight {
+        display: inline-block;
+        padding: 6px;
+        box-sizing: border-box;
+        background: $accent-color;
+      }
+    }
+  } 
+}

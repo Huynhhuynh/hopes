@@ -12,7 +12,7 @@ function hopes_cause_meta_options() {
   $cause_meta_option_tabs = apply_filters( 'hopes/cause_meta_option_tabs', [] );
 
   $cause_meta_options = Container::make( 'post_meta', __( 'Cause Settings', 'hopes' ) )
-    ->where( 'post_type', '=', 'cause' );
+    ->where( 'post_type', '=', 'hopes-cause' );
 
   if( count( $cause_meta_option_tabs ) > 0 ) {
     foreach( $cause_meta_option_tabs as $tab ) {

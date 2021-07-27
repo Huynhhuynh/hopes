@@ -3,3 +3,42 @@
   max-width: calc(100% - 30px);
   margin: 0 auto;
 }
+
+.donate-process__text {
+  margin-bottom: 0.5em;
+}
+.donate-process__bar {
+  width: 100%;
+}
+.donate-process__bar .__bar,
+.donate-process__bar .__bar_highlight {
+  border-radius: 20px;
+}
+.donate-process__bar .__bar {
+  width: 100%;
+  position: relative;
+  background: #ededed;
+  line-height: 0;
+}
+.donate-process__bar .__bar .__bar_highlight {
+  display: inline-block;
+  padding: 6px;
+  box-sizing: border-box;
+  background: #4caf50;
+}
+
+.single article.cause .cause-entry-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.single article.cause .cause-heading {
+  width: 100%;
+  margin-bottom: 3em;
+}
+.single article.cause .cause-entry-container {
+  width: 70%;
+}
+.single article.cause .cause-entry-container .post-title {
+  margin-top: 6px;
+  margin-bottom: 14px;
+}
