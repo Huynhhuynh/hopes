@@ -14,7 +14,7 @@ function hopes_global_options() {
 
   $hopes_settings_object = Container::make( 'theme_options', __( 'Settings', 'hopes' ) )
     ->set_page_file( 'hopes-settings' )
-    ->set_page_parent( 'edit.php?post_type=cause' );
+    ->set_page_parent( 'edit.php?post_type=hopes-cause' );
 
   foreach( $settings_global_tabs as $index => $tab ) {
     $hopes_settings_object->add_tab( $tab[ 'name' ], $tab[ 'fields' ] );

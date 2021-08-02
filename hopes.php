@@ -46,6 +46,8 @@ require( __DIR__ . '/vendor/autoload.php' );
   require( HOPES_DIR . '/inc/admin/donation-cpt.php' );
   require( HOPES_DIR . '/inc/admin/donor-cpt.php' );
   require( HOPES_DIR . '/inc/admin/cause-meta-fields.php' );
+  require( HOPES_DIR . '/inc/admin/donation-meta-fields.php' );
+  require( HOPES_DIR . '/inc/admin/donor-meta-fields.php' );
   require( HOPES_DIR . '/inc/admin/custom-tax.php' );
 }
 

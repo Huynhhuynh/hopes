@@ -46,19 +46,62 @@ function hopes_register_donation_cpt() {
     'show_in_menu' => 'edit.php?post_type=hopes-cause'
   ];
 
+  /**
+   * Register custom postype
+   * 
+   */
   register_post_type( 'hopes-donation', $args );
 
-  register_post_status( 'complete', [
-    'label' => _x( 'Complete', 'post status label', 'hopes' ),
-		'public' => true,
-		'label_count' => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'hopes' ),
-		'post_type' => [ 'hopes-donation' ], // Define one or more post types the status can be applied to.
-		'show_in_admin_all_list' => true,
-		'show_in_admin_status_list' => true,
-		'show_in_metabox_dropdown' => true,
-		'show_in_inline_dropdown' => true,
-		'dashicon' => 'dashicons-yes',
-  ] );
+  /**
+   * Register custom status 
+   * 
+   */
+  $donation_status = hopes_donation_custom_status();
+  if( $donation_status && count( $donation_status ) > 0 ) {
+    foreach( $donation_status as $name => $params ) {
+      register_post_status( $name, $params );
+    }
+  }
 }
 
 add_action( 'init', 'hopes_register_donation_cpt' );
+
+function hopes_add_custom_status_for_donation() { 
+  global $post; 
+  if(empty( $post->post_type ) || $post->post_type != 'hopes-donation') return;
+  $post_status = $post->post_status;
+
+  ob_start();
+  ?>
+  <script>
+    ( ( w, $ ) => { 
+      $( document ).ready( function() {
+        const post_status = '<?php echo $post_status ?>';
+        const donation_custom_status = HOPES_PHP_DATA.donation_custom_status;
+        if( ! donation_custom_status ) return;
+
+        let opts = '';
+        $.each( donation_custom_status, ( name, params ) => {
+          opts += `<option value="${ name }">${ params.label }</option>`
+        } )
+
+        $( 'select[name=post_status], select[name=_status]' )
+          .append( opts );
+
+        /**
+        * edit page
+        */
+        if( $( 'select[name=post_status]' ).length ) {
+          if( Object.keys( donation_custom_status ).includes( post_status ) ) {
+            $( '#post-status-display' ).text( donation_custom_status[post_status].label );
+            $( 'select[name=post_status]' ).val( post_status )
+          }
+        }
+      });
+    } )( window, jQuery )
+  </script>
+  <?php
+  echo ob_get_clean();
+}
+
+add_action( 'admin_footer', 'hopes_add_custom_status_for_donation' );

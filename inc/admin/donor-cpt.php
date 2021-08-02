@@ -42,7 +42,7 @@ function hopes_register_donor_cpt() {
     'publicly_queryable' => true,
     'show_ui' => true,
     'rewrite' => [ 'slug' => 'donor' ],
-    'supports' => [ 'title', 'author', 'thumbnail' ],
+    'supports' => [ 'title', 'author' ],
     'show_in_menu' => 'edit.php?post_type=hopes-cause'
   ];
 
@@ -50,3 +50,24 @@ function hopes_register_donor_cpt() {
 }
 
 add_action( 'init', 'hopes_register_donor_cpt' );
+
+/**
+ * Register donor donation metabox 
+ * 
+ */
+function hopes_donor_donation_meta_box() {
+  add_meta_box(
+      'donor-donation',
+      __( 'Donation', 'hopes' ),
+      'hopes_donor_donation_meta_box_callback',
+      'hopes-donor'
+  );
+}
+
+add_action( 'add_meta_boxes', 'hopes_donor_donation_meta_box' );
+
+function hopes_donor_donation_meta_box_callback() {
+  ?>
+  Hello...!
+  <?php 
+}
