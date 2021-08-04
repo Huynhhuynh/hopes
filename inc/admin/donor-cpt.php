@@ -67,7 +67,15 @@ function hopes_donor_donation_meta_box() {
 add_action( 'add_meta_boxes', 'hopes_donor_donation_meta_box' );
 
 function hopes_donor_donation_meta_box_callback() {
+  global $post; 
+  if( empty( $post ) || empty( $post->ID ) ) return;
+  
+  $donations = hopes_get_donation_by_donor( $post->ID );
+  if( empty( $donations ) || count( $donations ) < 0 ) return;
+  
   ?>
-  Hello...!
+  <pre>
+    <?php print_r( $donations ); ?>
+  </pre>
   <?php 
 }

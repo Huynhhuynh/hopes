@@ -92,7 +92,24 @@ function hopes_add_custom_status_for_donation() {
         * edit page
         */
         if( $( 'select[name=post_status]' ).length ) {
+          
           if( Object.keys( donation_custom_status ).includes( post_status ) ) {
+
+            {
+              let button_submit = $( 'input#publish' )
+              let submit_clone = button_submit.clone()
+
+              submit_clone
+                .attr( 'name', 'save' )
+                .attr( 'value', 'Update' )
+
+              button_submit.after( submit_clone.attr( 'id', 'fake-publish' ) )
+              button_submit.remove()
+
+              $( 'input#original_publish' )
+                .attr( 'value', 'Update' )
+            }
+
             $( '#post-status-display' ).text( donation_custom_status[post_status].label );
             $( 'select[name=post_status]' ).val( post_status )
           }

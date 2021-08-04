@@ -20,6 +20,7 @@ function hopes_donation_meta_options() {
     }
   }
 
+  
   do_action( 'hopes/donation_meta_options', $donation_meta_options );
 }
 

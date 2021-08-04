@@ -370,6 +370,19 @@ function hopes_get_select_option_users() {
  * 
  * @return Array 
  */
-function hopes_get_donation_by_donor( $donor_id = 0 ) {
+function hopes_get_donation_by_donor( $donor_id = 0, $paged = 1, $posts_per_page = 20 ) {
+  new WP_Query( [
+    'post_type' => 'hopes-donation',
+    'posts_per_page' => $posts_per_page,
+    'paged' => $paged,
+    'post_status' => 'any',
+    'meta_query' => [
+      [
+        'key' => 'donation_donor_id',
+        'value' => (int) $donor_id
+      ]
+    ]
+  ] );
 
+  return $result;
 }
