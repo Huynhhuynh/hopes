@@ -68,14 +68,57 @@ add_action( 'add_meta_boxes', 'hopes_donor_donation_meta_box' );
 
 function hopes_donor_donation_meta_box_callback() {
   global $post; 
+  $save_post = $post;
   if( empty( $post ) || empty( $post->ID ) ) return;
   
-  $donations = hopes_get_donation_by_donor( $post->ID );
-  if( empty( $donations ) || count( $donations ) < 0 ) return;
+  $donation_query = hopes_get_donation_by_donor( $post->ID );
   
-  ?>
-  <pre>
-    <?php print_r( $donations ); ?>
-  </pre>
-  <?php 
+  if( $donation_query->have_posts() ){
+    ?>
+    <div class="filter-donation-bar">
+      Filter...
+    </div>
+    <table class="wp-list-table widefat fixed striped table-view-list">
+      <thead>
+        <tr>
+          <th width="50px"><?php _e( 'ID', 'hopes' ) ?></th>
+          <th><?php _e( 'Amount', 'hopes' ) ?></th>
+          <th><?php _e( 'Date', 'hopes' ) ?></th>
+          <th><?php _e( 'Status', 'hopes' ) ?></th>
+          <th><?php _e( 'Cause', 'hopes' ) ?></th>
+        </tr>
+      </thead>
+      <tbody>
+      <?php
+      while( $donation_query->have_posts() ){
+        $donation_query->the_post();
+        $donation_amount = hopes_get_price( 
+          carbon_get_post_meta( get_the_ID(), 'donation_amount' ), 
+          carbon_get_post_meta( get_the_ID(), 'donation_amount_currency' ) 
+        );
+
+        $donation_cause_id = carbon_get_post_meta( get_the_ID(), 'donation_cause_id' );
+        $cause_title = get_the_title( $donation_cause_id );
+        ?>
+        <tr>
+          <td><?php the_ID() ?></td>
+          <td><?php echo $donation_amount; ?></td>
+          <td><?php echo get_the_date( '', get_the_ID() ); ?></td>
+          <td><?php echo get_post_status( get_the_ID() ); ?></td>
+          <td><a href="<?php echo get_the_permalink( $donation_cause_id ); ?>" target="_blank"><?php echo $cause_title; ?></a></td>
+        </tr>
+        <?php 
+      }
+      ?>
+      </tbody>
+    </table>
+    <?php 
+  } else {
+    // Error message: sorry, no posts here
+    echo wpautop( __( 'No data...!', 'hopes' ) );
+  }
+
+  wp_reset_query();
+
+  $GLOBALS[ 'post' ] = $save_post;
 }

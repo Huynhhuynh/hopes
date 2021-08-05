@@ -222,9 +222,14 @@ function hopes_cause_get_total_donate(  $cause_id = 0 ) {
  * @param Int $num
  * @return String 
  */
-function hopes_get_price( $num = 0 ) {
+function hopes_get_price( $num = 0, $currency = null ) {
+
+  if( $currency == null ) {
+    $currency = carbon_get_theme_option( 'hopes_currency' );
+  }
+
   $currency_opts = [
-    'currency' => hopes_get_currency( carbon_get_theme_option( 'hopes_currency' ) ),
+    'currency' => hopes_get_currency( $currency ),
     'position' => carbon_get_theme_option( 'hopes_currency_position' ),
     'thousands_separator' => carbon_get_theme_option( 'hopes_currency_thousands_separator' ),
     'decimal_separator' => carbon_get_theme_option( 'hopes_currency_decimal_separator' ),
@@ -371,7 +376,7 @@ function hopes_get_select_option_users() {
  * @return Array 
  */
 function hopes_get_donation_by_donor( $donor_id = 0, $paged = 1, $posts_per_page = 20 ) {
-  new WP_Query( [
+  $query = new WP_Query( [
     'post_type' => 'hopes-donation',
     'posts_per_page' => $posts_per_page,
     'paged' => $paged,
@@ -384,5 +389,5 @@ function hopes_get_donation_by_donor( $donor_id = 0, $paged = 1, $posts_per_page
     ]
   ] );
 
-  return $result;
+  return $query;
 }
