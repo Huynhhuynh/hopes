@@ -1,0 +1,28 @@
+.donor-donation-table-entry input[list] {
+  padding: 0 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  line-height: 28px;
+  outline: none;
+  border-color: #8c8f94;
+  border-style: solid;
+  box-shadow: none;
+  border-width: 1px;
+}
+.donor-donation-table-entry input[list]::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+@media (max-width: 782px) {
+  .donor-donation-table-entry input[list] {
+    padding: 5px 8px;
+  }
+}
+.donor-donation-table-entry .filter-donation-bar {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0 15px 0;
+}
+.donor-donation-table-entry .filter-donation-bar > * {
+  margin-right: 30px;
+}

@@ -307,18 +307,38 @@ function hopes_donation_custom_status() {
   return apply_filters( 'hopes/donation-custom-status', $custom_status );
 }
 
+function hopes_build_donation_status_options_html( $echo = fase ) {
+  $status = hopes_donation_custom_status();
+  $option_html = '';
+  foreach( $status as $name => $item ) {
+    $option_html .= '<option value="'. $name .'">'. $item[ 'label' ] .'</option>';
+  }
+
+  if( $echo == true ) 
+    echo $option_html;
+  else 
+    return $option_html;
+}
+
+/**
+ * Get all causes 
+ * 
+ */
+function hopes_query_all_causes() {
+  return get_posts( [
+    'numberposts' => -1,
+    'post_type' => 'hopes-cause',
+    'post_status' => 'any',
+  ] );
+}
+
 /**
  * Get all cause
  * 
  * @return Array 
  */
 function hopes_get_select_option_causes() {
-  $causes = get_posts( [
-    'numberposts' => -1,
-    'post_type' => 'hopes-cause',
-    'post_status' => 'publish',
-  ] );
-
+  $causes = hopes_query_all_causes();
   $options = [ '' => __( '— Select Cause —', 'hopes' ) ];
   if( ! $causes || count( $causes ) < 0 ) return $options;
 

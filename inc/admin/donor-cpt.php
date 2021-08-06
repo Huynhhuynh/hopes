@@ -75,43 +75,68 @@ function hopes_donor_donation_meta_box_callback() {
   
   if( $donation_query->have_posts() ){
     ?>
-    <div class="filter-donation-bar">
-      Filter...
-    </div>
-    <table class="wp-list-table widefat fixed striped table-view-list">
-      <thead>
-        <tr>
-          <th width="50px"><?php _e( 'ID', 'hopes' ) ?></th>
-          <th><?php _e( 'Amount', 'hopes' ) ?></th>
-          <th><?php _e( 'Date', 'hopes' ) ?></th>
-          <th><?php _e( 'Status', 'hopes' ) ?></th>
-          <th><?php _e( 'Cause', 'hopes' ) ?></th>
-        </tr>
-      </thead>
-      <tbody>
-      <?php
-      while( $donation_query->have_posts() ){
-        $donation_query->the_post();
-        $donation_amount = hopes_get_price( 
-          carbon_get_post_meta( get_the_ID(), 'donation_amount' ), 
-          carbon_get_post_meta( get_the_ID(), 'donation_amount_currency' ) 
-        );
+    <div class="donor-donation-table-entry">
+      <div class="filter-donation-bar">
+        <div class="__by-cause">
+          <label>
+            <span class="__label"><?php _e( 'Cause', 'hopes' ) ?></span>
+            <input list="cause-search" name="cause-search" autocomplete="off" type="search" placeholder="<?php _e( 'Type cause name...', 'hopes' ); ?>">
+            <datalist id="cause-search">
+              <!-- Data render by js -->
+            </datalist>
+          </label>
+        </div>
+        <div class="__by-status">
+          <label>
+            <span class="__label"><?php _e( 'Select status', 'hopes' ) ?></span>
+            <select name="" id="by_cause">
+              <option value=""><?php _e( '— All Status —' ) ?></option>
+              <?php hopes_build_donation_status_options_html( $echo = true ); ?>
+            </select>
+          </label>
+        </div>
+        <div class="__by-date">
+          <span class="__label"><?php _e( 'Select date', 'hopes' ) ?></span>
+          from <input type="date" max="<?php echo current_time( 'mysql' ) ?>">
+          to <input type="date" max="<?php echo current_time( 'mysql' ) ?>">
+        </div>
+      </div>
+      <table class="wp-list-table widefat fixed striped table-view-list">
+        <thead>
+          <tr>
+            <th width="50px"><?php _e( 'ID', 'hopes' ) ?></th>
+            <th><?php _e( 'Amount', 'hopes' ) ?></th>
+            <th><?php _e( 'Date', 'hopes' ) ?></th>
+            <th><?php _e( 'Status', 'hopes' ) ?></th>
+            <th><?php _e( 'Cause', 'hopes' ) ?></th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php
+        while( $donation_query->have_posts() ){
+          $donation_query->the_post();
+          $donation_amount = hopes_get_price( 
+            carbon_get_post_meta( get_the_ID(), 'donation_amount' ), 
+            carbon_get_post_meta( get_the_ID(), 'donation_amount_currency' ) 
+          );
 
-        $donation_cause_id = carbon_get_post_meta( get_the_ID(), 'donation_cause_id' );
-        $cause_title = get_the_title( $donation_cause_id );
+          $donation_cause_id = carbon_get_post_meta( get_the_ID(), 'donation_cause_id' );
+          $cause_title = get_the_title( $donation_cause_id );
+          $status = get_post_status( get_the_ID() );
+          ?>
+          <tr>
+            <td><?php the_ID() ?></td>
+            <td><?php echo $donation_amount; ?></td>
+            <td><?php echo get_the_date( '', get_the_ID() ); ?></td>
+            <td><span class="__tag is-<?php echo $status; ?>"><?php echo $status; ?></span></td>
+            <td><a href="<?php echo get_the_permalink( $donation_cause_id ); ?>" target="_blank"><?php echo $cause_title; ?></a></td>
+          </tr>
+          <?php 
+        }
         ?>
-        <tr>
-          <td><?php the_ID() ?></td>
-          <td><?php echo $donation_amount; ?></td>
-          <td><?php echo get_the_date( '', get_the_ID() ); ?></td>
-          <td><?php echo get_post_status( get_the_ID() ); ?></td>
-          <td><a href="<?php echo get_the_permalink( $donation_cause_id ); ?>" target="_blank"><?php echo $cause_title; ?></a></td>
-        </tr>
-        <?php 
-      }
-      ?>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
     <?php 
   } else {
     // Error message: sorry, no posts here

@@ -2,14 +2,6 @@
  * Admin 
  */
 
-;( ( w, $ ) => {
-  'use strict';
+import './scss/admin.scss'
 
-  /**
-   * Document Ready
-   */
-  $( () => {
-
-  } )
-
-} )( window, jQuery )
+import './admin/donor'
