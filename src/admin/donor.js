@@ -41,11 +41,45 @@
     } )
   }
 
+  const getDonation = async ( params ) => {
+    const result = await $.ajax( {
+      type: 'POST',
+      url: wp.ajax.settings.url,
+      data: {
+        action: 'hopes_ajax_query_donations',
+        params
+      }
+    } )
+
+    console.log( result )
+  }
+
+  const donorDonationFilterHandle = () => {
+    let fields = $( 'input, select', '.donor-donation-table-entry' )
+
+    const getDataSearch = () => {
+      let s = {}
+      fields.each( ( index, field ) => {
+        let $field = $( field )
+        if( $field.attr( 'name' ) && $field.val() )
+          s[$field.attr( 'name' )] = $field.val()
+      } )
+
+      return s
+    }
+
+    fields.on( 'change', async e => {
+      // console.log( getDataSearch() )
+      getDonation( getDataSearch() )
+    } )
+  }
+
   /**
    * 
    */
   const donorInit = () => {
     causeSearchInputUpdateDataList()
+    donorDonationFilterHandle()
   }
 
   /**

@@ -105,39 +105,8 @@ function hopes_get_select_option_currency() {
  * 
  */
 function hopes_email_actions_register() {
-  return apply_filters( 'hopes/email_actions_register', [
-    [
-      'action' => 'DONOR_DONATION_SUCCESSFUL',
-      'label' => __( 'Donor — Donation Successful', 'hopes' ),
-    ],
-    [
-      'action' => 'DONOR_OFFLINE_DONATION_INSTRUCTIONS',
-      'label' =>  __( 'Donor — Offline Donation Instructions', 'hopes' ),
-    ],
-    [
-      'action' => 'DONOR_REGISTRATION_INFORMATION',
-      'label' => __( 'Donor — Registration Information', 'hopes' ),
-    ],
-    [
-      'action' => 'DONOR_CONFIRM_EMAIL',
-      'label' => __( 'Donor — Confirm Email (After register user)', 'hopes' ),
-    ],
-    [
-      'action' => 'ADMIN_NEW_DONATION',
-      'label' => __( 'Admin — New Donation', 'hopes' ),
-      'custom_email_recipients' => true,
-    ],
-    [
-      'action' => 'ADMIN_NEW_OFFLINE_DONATION',
-      'label' => __( 'Admin — New Offline Donation', 'hopes' ),
-      'custom_email_recipients' => true,
-    ],
-    [
-      'action' => 'ADMIN_NEW_USER_REGISTRATION',
-      'label' => __( 'Admin — New User Registration', 'hopes' ),
-      'custom_email_recipients' => true,
-    ]
-  ] );
+  $actions = require( HOPES_DIR . '/inc/lib/email-actions-register.php' );
+  return apply_filters( 'hopes/email_actions_register', $actions );
 }
 
 /**
@@ -389,25 +358,31 @@ function hopes_get_select_option_users() {
 }
 
 /**
- * Get donation by donor ID
+ * Get donation 
  *  
- * @param Int $donor_id
+ * @param Int $paged
+ * @param Int $posts_per_page
+ * @param Array $s
  * 
  * @return Array 
  */
-function hopes_get_donation_by_donor( $donor_id = 0, $paged = 1, $posts_per_page = 20 ) {
-  $query = new WP_Query( [
+function hopes_get_donation( $paged = 1, $posts_per_page = 20, $s = [] ) {
+
+  $args = [
     'post_type' => 'hopes-donation',
     'posts_per_page' => $posts_per_page,
     'paged' => $paged,
     'post_status' => 'any',
-    'meta_query' => [
-      [
-        'key' => 'donation_donor_id',
-        'value' => (int) $donor_id
-      ]
-    ]
-  ] );
+  ];
 
-  return $query;
+  if( count( $s ) > 0 ) {
+    $meta_query = [];
+    foreach( $s as $s_item ) {
+      array_push( $meta_query, $s_item );
+    }
+
+    $args[ 'meta_query' ] = $meta_query;
+  }
+
+  return new WP_Query( $args );
 }

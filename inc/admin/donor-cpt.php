@@ -71,7 +71,12 @@ function hopes_donor_donation_meta_box_callback() {
   $save_post = $post;
   if( empty( $post ) || empty( $post->ID ) ) return;
   
-  $donation_query = hopes_get_donation_by_donor( $post->ID );
+  $donation_query = hopes_get_donation( 1, 20, [
+    [
+      'key' => 'donation_donor_id',
+      'value' => $post->ID // donor id
+    ]
+  ] );
   
   if( $donation_query->have_posts() ){
     ?>
@@ -80,7 +85,12 @@ function hopes_donor_donation_meta_box_callback() {
         <div class="__by-cause">
           <label>
             <span class="__label"><?php _e( 'Cause', 'hopes' ) ?></span>
-            <input list="cause-search" name="cause-search" autocomplete="off" type="search" placeholder="<?php _e( 'Type cause name...', 'hopes' ); ?>">
+            <input 
+              list="cause-search" 
+              name="cause-search" 
+              autocomplete="off" 
+              type="search" 
+              placeholder="<?php _e( 'Type cause name...', 'hopes' ); ?>">
             <datalist id="cause-search">
               <!-- Data render by js -->
             </datalist>
@@ -89,7 +99,7 @@ function hopes_donor_donation_meta_box_callback() {
         <div class="__by-status">
           <label>
             <span class="__label"><?php _e( 'Select status', 'hopes' ) ?></span>
-            <select name="" id="by_cause">
+            <select name="donation-status">
               <option value=""><?php _e( '— All Status —' ) ?></option>
               <?php hopes_build_donation_status_options_html( $echo = true ); ?>
             </select>
@@ -97,9 +107,10 @@ function hopes_donor_donation_meta_box_callback() {
         </div>
         <div class="__by-date">
           <span class="__label"><?php _e( 'Select date', 'hopes' ) ?></span>
-          from <input type="date" max="<?php echo current_time( 'mysql' ) ?>">
-          to <input type="date" max="<?php echo current_time( 'mysql' ) ?>">
+          from <input name="donation-from-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
+          to <input name="donation-end-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
         </div>
+        <input type="hidden" name="donor-id" value="<?php echo $post->ID; ?>">
       </div>
       <table class="wp-list-table widefat fixed striped table-view-list">
         <thead>
@@ -125,10 +136,10 @@ function hopes_donor_donation_meta_box_callback() {
           $status = get_post_status( get_the_ID() );
           ?>
           <tr>
-            <td><?php the_ID() ?></td>
+            <td><a href="<?php echo get_edit_post_link( get_the_ID() ) ?>" target="_blank">#<?php the_ID() ?></a></td>
             <td><?php echo $donation_amount; ?></td>
             <td><?php echo get_the_date( '', get_the_ID() ); ?></td>
-            <td><span class="__tag is-<?php echo $status; ?>"><?php echo $status; ?></span></td>
+            <td><span class="hopes__tag is-<?php echo $status; ?>"><?php echo $status; ?></span></td>
             <td><a href="<?php echo get_the_permalink( $donation_cause_id ); ?>" target="_blank"><?php echo $cause_title; ?></a></td>
           </tr>
           <?php 
