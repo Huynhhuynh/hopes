@@ -28,3 +28,89 @@ function hopes_donor_meta_options() {
 }
 
 add_action( 'carbon_fields_register_fields', 'hopes_donor_meta_options' );
+
+/**
+ * Register donor donation metabox 
+ * 
+ */
+function hopes_donor_donation_meta_box() {
+  add_meta_box(
+      'donor-donation',
+      __( 'Donation', 'hopes' ),
+      'hopes_donor_donation_meta_box_callback',
+      'hopes-donor'
+  );
+}
+
+add_action( 'add_meta_boxes', 'hopes_donor_donation_meta_box' );
+
+function hopes_donor_donation_meta_box_callback() {
+  global $post; 
+  $save_post = $post;
+  if( empty( $post ) || empty( $post->ID ) ) return;
+  
+  $donation_query = hopes_get_donation( 1, [
+    [
+      'key' => 'donation_donor_id',
+      'value' => $post->ID // donor id
+    ]
+  ] );
+  
+  if( $donation_query->have_posts() ){
+    ?>
+    <div class="donor-donation-table-entry">
+      <div class="filter-donation-bar">
+        <div class="__by-cause">
+          <label>
+            <span class="__label"><?php _e( 'Select cause', 'hopes' ) ?></span>
+            <select name="cause-id">
+              <option value=""><?php _e( '— All Causes —' ) ?></option>
+            </select>
+          </label>
+        </div>
+        <div class="__by-status">
+          <label>
+            <span class="__label"><?php _e( 'Select status', 'hopes' ) ?></span>
+            <select name="donation-status">
+              <option value=""><?php _e( '— All Status —' ) ?></option>
+              <?php hopes_build_donation_status_options_html( $echo = true ); ?>
+            </select>
+          </label>
+        </div>
+        <div class="__by-date">
+          <span class="__label"><?php _e( 'Select date', 'hopes' ) ?></span>
+          from <input name="donation-from-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
+          to <input name="donation-end-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
+        </div>
+        <input type="hidden" name="donor-id" value="<?php echo $post->ID; ?>">
+      </div>
+      <table class="wp-list-table widefat fixed striped table-view-list">
+        <thead>
+          <tr>
+            <th width="50px"><?php _e( 'ID', 'hopes' ) ?></th>
+            <th><?php _e( 'Amount', 'hopes' ) ?></th>
+            <th><?php _e( 'Date', 'hopes' ) ?></th>
+            <th><?php _e( 'Status', 'hopes' ) ?></th>
+            <th><?php _e( 'Cause', 'hopes' ) ?></th>
+          </tr>
+        </thead>
+        <tbody class="" id="donor_donation_results">
+        <?php
+        while( $donation_query->have_posts() ){
+          $donation_query->the_post();
+          hopes_donor_the_donation_table_result_item( get_the_ID() );
+        }
+        ?>
+        </tbody>
+      </table>
+    </div>
+    <?php 
+  } else {
+    // Error message: sorry, no posts here
+    echo wpautop( __( 'No data...!', 'hopes' ) );
+  }
+
+  wp_reset_query();
+
+  $GLOBALS[ 'post' ] = $save_post;
+}

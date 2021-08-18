@@ -36,11 +36,10 @@
 .hopes__tag {
   padding: 3px 6px;
   border-radius: 3px;
+  text-transform: capitalize;
   border: solid 1px #8c8f94;
   line-height: normal;
   font-weight: 500;
-  font-size: 10px;
-  text-transform: uppercase;
 }
 .hopes__tag.is-complete {
   background: #4caf50;

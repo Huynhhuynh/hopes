@@ -366,14 +366,19 @@ function hopes_get_select_option_users() {
  * 
  * @return Array 
  */
-function hopes_get_donation( $paged = 1, $posts_per_page = 20, $s = [] ) {
+function hopes_get_donation( $paged = 1, $s = [], $post_status = 'any' ) {
 
   $args = [
     'post_type' => 'hopes-donation',
-    'posts_per_page' => $posts_per_page,
+    'posts_per_page' => apply_filters( 'hopes/query_posts_per_page', 20 ),
     'paged' => $paged,
-    'post_status' => 'any',
+    'post_status' => $post_status,
   ];
+
+  if( isset( $s[ 's' ] ) ) {
+    $args[ 's' ] = $s['s' ];
+    unset( $s[ 's' ] );
+  }
 
   if( count( $s ) > 0 ) {
     $meta_query = [];
@@ -383,6 +388,11 @@ function hopes_get_donation( $paged = 1, $posts_per_page = 20, $s = [] ) {
 
     $args[ 'meta_query' ] = $meta_query;
   }
-
+  // wp_send_json( $args );
   return new WP_Query( $args );
+}
+
+function hopes_donor_the_donation_table_result_item( $donation_id ) {
+  set_query_var( 'donation_id', $donation_id );
+  load_template( hopes_template_path( 'admin/donor-donation-table-result-item.php' ), false );
 }

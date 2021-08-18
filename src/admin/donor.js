@@ -6,6 +6,13 @@
 ;( ( w, $ ) => {
   'use strict';
 
+  const doFragments = ( data = {} ) => { 
+    $.each( data, ( selector, content ) => {
+      if( $( selector ).length > 0 )
+        $( selector ).html( content )
+    } )
+  }
+
   const getDataListCauses = async () => {
     const res = await $.ajax( {
       type: 'POST',
@@ -21,24 +28,17 @@
     return res.result
   }
 
-  const causeSearchInputUpdateDataList = () => {
-    const causeSearchInput = $( 'input[name=cause-search]' )
-    const causeDatalist = $( 'datalist#cause-search' )
-
-    if( causeSearchInput.length <= 0 || causeDatalist.length <= 0 ) return
-
-    causeSearchInput.one( 'input', async e => {
-      let causes = await getDataListCauses()
+  const pushCauseOptions = async () => {
+    let causes = await getDataListCauses()
       let dataListOptionHtml = ''
       
       if( ! causes || causes.length <= 0 ) return
 
       $.each( causes, ( index, item ) => {
-        dataListOptionHtml += `<option value="${item.post_title}" />`
+        dataListOptionHtml += `<option value="${item.ID}">${item.post_title}</option>`
       } )
 
-      causeDatalist.html( dataListOptionHtml )
-    } )
+      $( 'select[name=cause-id]' ).append( dataListOptionHtml )
   }
 
   const getDonation = async ( params ) => {
@@ -48,10 +48,16 @@
       data: {
         action: 'hopes_ajax_query_donations',
         params
-      }
+      } 
     } )
 
     console.log( result )
+    if( result.success == true ) {
+      doFragments( result.fragments );
+    } else {
+      alert( 'Internal error: Please refresh and try againt.' )
+    }
+    
   }
 
   const donorDonationFilterHandle = () => {
@@ -78,7 +84,7 @@
    * 
    */
   const donorInit = () => {
-    causeSearchInputUpdateDataList()
+    pushCauseOptions()
     donorDonationFilterHandle()
   }
 
