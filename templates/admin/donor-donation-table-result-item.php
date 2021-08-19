@@ -14,7 +14,7 @@ $status = get_post_status( $donation_id );
 ?>
 <tr>
   <td>
-    <a href="<?php echo get_edit_post_link( $donation_id ) ?>" target="_blank"><?php echo $donation_id ?></a>
+    <a href="<?php echo get_edit_post_link( $donation_id ) ?>" target="_blank">#<?php echo $donation_id ?></a>
   </td>
   <td>
     <?php echo $donation_amount; ?>

@@ -27,5 +27,8 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "dependencies": {
+    "paginationjs": "^2.1.5"
+  }
 }

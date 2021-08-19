@@ -23,6 +23,7 @@ add_action( 'wp_ajax_nopriv_hopes_ajax_get_all_causes', 'hopes_ajax_get_all_caus
 function hopes_ajax_query_donations() {
   // wp_send_json( $_POST );
   $params = $_POST[ 'params' ];
+  $paged = isset( $params[ 'paged' ] ) ? (int) $params[ 'paged' ] : 1;
   $s = [];
 
   if( isset( $params[ 'cause-id' ] ) ) {
@@ -43,7 +44,12 @@ function hopes_ajax_query_donations() {
     ] );
   }
 
-  $donation_query = hopes_get_donation( 1, $s );
+  $status = 'any';
+  if( isset( $params[ 'donation-status' ] ) ) {
+    $status = $params[ 'donation-status' ];
+  }
+
+  $donation_query = hopes_get_donation( $paged, $s, $status );
   
   ob_start();
   while( $donation_query->have_posts() ){
@@ -52,13 +58,24 @@ function hopes_ajax_query_donations() {
   }
   $content = ob_get_clean();
 
-  wp_send_json( [
+  $result = [
     'success' => true,
-    's' => $s,
+    'result' => $donation_query,
     'fragments' => [
       '#donor_donation_results' => $content,
     ]
-  ] );
+  ];
+
+  if( isset( $params[ 'pagination' ] ) ) {
+    $result[ 'pagination_params' ] = [
+      'element_target' => '#hopes-donor-donations-pagination',
+      'total' => $donation_query->found_posts,
+      'items_per_page' => (int) $donation_query->query_vars[ 'posts_per_page' ],
+      'current_page' => (int) $donation_query->query_vars[ 'paged' ]
+    ];
+  }
+
+  wp_send_json( $result );
 }
 
 add_action( 'wp_ajax_hopes_ajax_query_donations', 'hopes_ajax_query_donations' );

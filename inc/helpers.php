@@ -370,7 +370,7 @@ function hopes_get_donation( $paged = 1, $s = [], $post_status = 'any' ) {
 
   $args = [
     'post_type' => 'hopes-donation',
-    'posts_per_page' => apply_filters( 'hopes/query_posts_per_page', 20 ),
+    'posts_per_page' => apply_filters( 'hopes/query_posts_per_page', 3 ),
     'paged' => $paged,
     'post_status' => $post_status,
   ];

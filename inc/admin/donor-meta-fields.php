@@ -55,7 +55,7 @@ function hopes_donor_donation_meta_box_callback() {
       'value' => $post->ID // donor id
     ]
   ] );
-  
+  // echo '<pre>'; print_r( $donation_query ); echo '</pre>';
   if( $donation_query->have_posts() ){
     ?>
     <div class="donor-donation-table-entry">
@@ -79,8 +79,8 @@ function hopes_donor_donation_meta_box_callback() {
         </div>
         <div class="__by-date">
           <span class="__label"><?php _e( 'Select date', 'hopes' ) ?></span>
-          from <input name="donation-from-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
-          to <input name="donation-end-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
+          <?php _e( 'from', 'hopes' ) ?> <input name="donation-from-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
+          <?php _e( 'to', 'hopes' ) ?> <input name="donation-end-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
         </div>
         <input type="hidden" name="donor-id" value="<?php echo $post->ID; ?>">
       </div>
@@ -95,13 +95,15 @@ function hopes_donor_donation_meta_box_callback() {
           </tr>
         </thead>
         <tbody class="" id="donor_donation_results">
-        <?php
-        while( $donation_query->have_posts() ){
-          $donation_query->the_post();
-          hopes_donor_the_donation_table_result_item( get_the_ID() );
-        }
-        ?>
+          <!-- Ajax load items -->
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">
+              <div id="hopes-donor-donations-pagination"></div>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
     <?php 
