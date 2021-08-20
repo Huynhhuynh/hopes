@@ -26,6 +26,7 @@ function hopes_ajax_query_donations() {
   $paged = isset( $params[ 'paged' ] ) ? (int) $params[ 'paged' ] : 1;
   $s = [];
 
+  # Cause ID
   if( isset( $params[ 'cause-id' ] ) ) {
     array_push( $s, [
       [
@@ -35,6 +36,7 @@ function hopes_ajax_query_donations() {
     ] );
   }
 
+  # Donor ID
   if( isset( $params[ 'donor-id' ] ) ) {
     array_push( $s, [
       [
@@ -44,6 +46,21 @@ function hopes_ajax_query_donations() {
     ] );
   }
 
+  # Date query
+  if( isset( $params[ 'donation-date-query-after' ] ) || isset( $params[ 'donation-date-query-before' ] ) ) {
+    $s[ 'date_query' ] = [];
+
+    if( isset( $params[ 'donation-date-query-after' ] ) ) {
+      $s[ 'date_query' ][ 'after' ] = date( 'Y-m-d', strtotime( $params[ 'donation-date-query-after' ] ) );
+    }
+
+    if( isset( $params[ 'donation-date-query-before' ] ) ) {
+      $s[ 'date_query' ][ 'before' ] = date( 'Y-m-d', strtotime( $params[ 'donation-date-query-before' ] ) );
+    }
+  }
+
+
+  # Status
   $status = 'any';
   if( isset( $params[ 'donation-status' ] ) ) {
     $status = $params[ 'donation-status' ];

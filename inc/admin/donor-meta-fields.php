@@ -79,8 +79,8 @@ function hopes_donor_donation_meta_box_callback() {
         </div>
         <div class="__by-date">
           <span class="__label"><?php _e( 'Select date', 'hopes' ) ?></span>
-          <?php _e( 'from', 'hopes' ) ?> <input name="donation-from-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
-          <?php _e( 'to', 'hopes' ) ?> <input name="donation-end-date" type="date" max="<?php echo current_time( 'mysql' ) ?>">
+          <?php _e( 'from', 'hopes' ) ?> <input name="donation-date-query-after" type="date" max="<?php echo current_time( 'mysql' ) ?>">
+          <?php _e( 'to', 'hopes' ) ?> <input name="donation-date-query-before" type="date" max="<?php echo current_time( 'mysql' ) ?>">
         </div>
         <input type="hidden" name="donor-id" value="<?php echo $post->ID; ?>">
       </div>

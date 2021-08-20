@@ -2,6 +2,21 @@
  * Donor admin edit page donation table style 
  */
 .donor-donation-table-entry {  
+  position: relative;
+  
+  &.is-loading {
+    
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      background: rgba(255,255,255,.5);
+    }
+  }
 
   input[list] {
     padding: 0 8px;

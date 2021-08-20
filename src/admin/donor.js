@@ -46,6 +46,9 @@ import { hopes_pagination_render } from '../helpers';
   }
 
   const getDonation = async ( params ) => {
+    let $wrap = $( '.donor-donation-table-entry' );
+    $wrap.addClass( 'is-loading' );
+
     const result = await $.ajax( {
       type: 'POST',
       url: wp.ajax.settings.url,
@@ -54,6 +57,8 @@ import { hopes_pagination_render } from '../helpers';
         params
       } 
     } )
+
+    $wrap.removeClass( 'is-loading' );
 
     if( result.success == true ) {
       doFragments( result.fragments );

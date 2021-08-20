@@ -142,7 +142,7 @@ function hopes_set_default_email_template_global_settings() {
  * @param String $template
  */
 function hopes_cause_custom_single_template( $template ) {
-  if ( is_singular( 'cause' ) ) {
+  if ( is_singular( 'hopes-cause' ) ) {
     $template = hopes_template_path( 'single-cause.php' );
   }
   return $template;
@@ -370,16 +370,27 @@ function hopes_get_donation( $paged = 1, $s = [], $post_status = 'any' ) {
 
   $args = [
     'post_type' => 'hopes-donation',
-    'posts_per_page' => apply_filters( 'hopes/query_posts_per_page', 3 ),
+    'posts_per_page' => apply_filters( 'hopes/query_posts_per_page', 20 ),
     'paged' => $paged,
     'post_status' => $post_status,
   ];
 
+  # Search string
   if( isset( $s[ 's' ] ) ) {
     $args[ 's' ] = $s['s' ];
     unset( $s[ 's' ] );
   }
 
+  # Date query
+  if( isset( $s[ 'date_query' ] ) ) {
+    $args[ 'date_query' ] = array_merge( [
+      'column' => 'post_date',
+      'inclusive' => true,
+    ], $s[ 'date_query' ] );
+    unset( $s[ 'date_query' ] );
+  }
+
+  # Meta query
   if( count( $s ) > 0 ) {
     $meta_query = [];
     foreach( $s as $s_item ) {
@@ -388,7 +399,7 @@ function hopes_get_donation( $paged = 1, $s = [], $post_status = 'any' ) {
 
     $args[ 'meta_query' ] = $meta_query;
   }
-  // wp_send_json( $args );
+  # wp_send_json( $args );
   return new WP_Query( $args );
 }
 
