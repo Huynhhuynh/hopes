@@ -173,16 +173,44 @@ function hopes_cause_single_entry_template( $post_id ) {
   load_template( hopes_template_path( 'cause-entry.php' ), false );
 }
 
+function hopes_query_donations_by_cause( $cause_id = 0 ) {
+  $donations = get_posts( [
+    'numberposts' => -1,
+    'post_type' => 'hopes-donation',
+    'post_status' => 'complete',
+    'meta_query' => [
+      [
+        'field' => 'donation_cause_id',
+        'value' => (int) $cause_id,
+      ]
+    ]
+  ] );
+
+  if( $donations && count( $donations ) > 0 ) {
+    return array_map( function( $d ) {
+      $d->donation_donor_id = carbon_get_post_meta( $d->ID, 'donation_donor_id' );
+      $d->donation_amount = carbon_get_post_meta( $d->ID, 'donation_amount' );
+      return $d;
+    }, $donations );
+  }
+
+  return $donations;
+}
+
 /**
  * Get total donate by cause id 
  * 
  * @param Int $cause_id
  * @return Int 
  */
-function hopes_cause_get_total_donate(  $cause_id = 0 ) {
+function hopes_cause_get_total_donate( $cause_id = 0 ) {
   // query here!
-
-  return 400; // exam return 400 
+  $donations = hopes_query_donations_by_cause( $cause_id ); 
+  if( $donations && count( $donations ) > 0 ) {
+    return (float) array_sum( array_map( function( $d ) { return (float) $d->donation_amount; }, $donations ) );
+  } else {
+    return 0;
+  }
 }
 
 /**
@@ -238,8 +266,8 @@ function hopes_get_price( $num = 0, $currency = null ) {
  * @return Float 
  */
 function hopes_get_percent( $target = 0, $achieved = 0 ) {
-  $percent = number_format( ($achieved / $target ) * 100, 2, '.', ',' );
-  return $percent > 100 ? 100 : $percent;
+  $percent = ($achieved / $target ) * 100;
+  return $percent > 100 ? 100 : number_format( $percent, 2 );
 }
 
 

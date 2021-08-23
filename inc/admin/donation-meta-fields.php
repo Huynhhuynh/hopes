@@ -37,9 +37,9 @@ function hopes_donation_infomation_options_tab_register( $tabs = [] ) {
         ->add_options( 'hopes_get_select_option_causes' ),
       Field::make( 'text', 'donation_amount', __( 'Donation Amount', 'hopes' ) )
         ->set_attribute( 'type', 'number' ),
-      Field::make( 'select', 'donation_amount_currency', __( 'Currency', 'hopes' ) )
-        ->add_options( 'hopes_get_select_option_currency' )
-        ->set_default_value( carbon_get_theme_option( 'hopes_currency' ) )
+      // Field::make( 'select', 'donation_amount_currency', __( 'Currency', 'hopes' ) )
+      //   ->add_options( 'hopes_get_select_option_currency' )
+      //   ->set_default_value( carbon_get_theme_option( 'hopes_currency' ) )
     ],
   ] );
 

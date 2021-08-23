@@ -3,11 +3,7 @@
  * 
  */
 
-$donation_amount = hopes_get_price( 
-  carbon_get_post_meta( $donation_id, 'donation_amount' ), 
-  carbon_get_post_meta( $donation_id, 'donation_amount_currency' ) 
-);
-
+$donation_amount = hopes_get_price( carbon_get_post_meta( $donation_id, 'donation_amount' ) );
 $donation_cause_id = carbon_get_post_meta( $donation_id, 'donation_cause_id' );
 $cause_title = get_the_title( $donation_cause_id );
 $status = get_post_status( $donation_id );
