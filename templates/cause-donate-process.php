@@ -5,7 +5,7 @@
  * 
  */
 
-// echo '<pre>'; print_r( $cause_meta_data ); echo '</pre>';
+echo '<pre>'; print_r( $cause_meta_data[ 'donors' ] ); echo '</pre>';
 ?>
 <div class="donate-process">
   <div class="donate-process__text">

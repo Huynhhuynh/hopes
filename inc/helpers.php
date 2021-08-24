@@ -198,6 +198,63 @@ function hopes_query_donations_by_cause( $cause_id = 0 ) {
 }
 
 /**
+ * Get donors by cause id 
+ * 
+ * @param Array $cause_id
+ * @return Array
+ */
+function hopes_get_donors_by_cause( $cause_id = 0 ) {
+  $donations = hopes_query_donations_by_cause( $cause_id );
+  $donors = [];
+
+  if( ! $donations || count( $donations ) <= 0 ) return $donors;
+  
+  foreach( $donations as $index => $d ) {
+    if( isset( $donors[ $d->donation_donor_id ] ) ) {
+      $donors[ $d->donation_donor_id ][ 'donation_total' ] += (float) $d->donation_amount;
+      $donors[ $d->donation_donor_id ][ 'donation_count' ] += 1;
+      $donors[ $d->donation_donor_id ][ 'donation_ids' ][] = $d->ID;
+      continue;
+    }
+
+    $donor_id = (int) $d->donation_donor_id;
+    $donor_user = carbon_get_post_meta( $donor_id, 'donor_user' );
+    $donor_email = carbon_get_post_meta( $donor_id, 'donor_email' );
+    $donor_avatar = '';
+    $donor_avatar_url = '';
+
+    if( ! empty( $donor_user ) ) {
+      $donor_avatar = get_avatar( $donor_user );
+      $donor_avatar_url = get_avatar_url( $donor_user );
+    } else {
+      $donor_avatar = get_avatar( $donor_email );
+      $donor_avatar_url = get_avatar_url( $donor_email );
+    }
+
+    $donors[ $donor_id ] = [
+      'ID' => $donor_id,
+      'donor_user' => $donor_user,
+      'donor_first_name' => carbon_get_post_meta( $donor_id, 'donor_first_name' ),
+      'donor_last_name' => carbon_get_post_meta( $donor_id, 'donor_last_name' ),
+      'donor_email' => carbon_get_post_meta( $donor_id, 'donor_email' ),
+      'donor_phone' => carbon_get_post_meta( $donor_id, 'donor_phone' ),
+      'donor_url' => carbon_get_post_meta( $donor_id, 'donor_url' ),
+      'donation_total' => (float) $d->donation_amount,
+      'donation_count' => 1,
+      'donation_ids' => [ $d->ID ],
+      'donor_avatar_url' => $donor_avatar_url,
+      'donor_avatar' => $donor_avatar,
+    ];
+  }
+
+  return $donors;
+}
+
+function hopes_get_donor( $donor_id = 0 ) {
+
+}
+
+/**
  * Get total donate by cause id 
  * 
  * @param Int $cause_id
@@ -281,11 +338,13 @@ function hopes_cause_donate_process_template( $post_id ) {
 
   $target = carbon_get_post_meta( $post_id, 'couse_target_donation_amount' );
   $total = hopes_cause_get_total_donate( $post_id );
+  $donors = hopes_get_donors_by_cause( $post_id );
 
   $cause_meta_data = [
     'done' => false,
     'target_donate' => $target,
     'total_donated' => $total,
+    'donors' => $donors,
     'percent' => hopes_get_percent( $target, $total ),
     'goal_achieved_message' => carbon_get_post_meta( $post_id, 'cause_goal_achieved_message' ),
   ];
