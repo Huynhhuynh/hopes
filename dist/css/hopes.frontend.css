@@ -9,6 +9,7 @@
 }
 .donate-process__bar {
   width: 100%;
+  margin-bottom: 15px;
 }
 .donate-process__bar .__bar,
 .donate-process__bar .__bar_highlight {
@@ -25,6 +26,38 @@
   padding: 6px;
   box-sizing: border-box;
   background: #4caf50;
+}
+
+.donor-list {
+  display: inline-block;
+}
+.donor-list__ul {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.donor-list__item {
+  list-style: none;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 56px;
+  background: white;
+  border: solid 3px white;
+  box-shadow: 2px 3px 8px 0 rgba(1, 1, 1, 0.15);
+}
+.donor-list__item:not(:first-child) {
+  margin-left: -20%;
+}
+.donor-list__item-avatar {
+  width: 100%;
+  display: block;
+}
+.donor-list__item-avatar img {
+  width: 100%;
+  border-radius: 100%;
 }
 
 .single article.cause .cause-entry-container {

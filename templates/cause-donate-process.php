@@ -5,7 +5,7 @@
  * 
  */
 
-echo '<pre>'; print_r( $cause_meta_data[ 'donors' ] ); echo '</pre>';
+#echo '<pre>'; print_r( $cause_meta_data[ 'donors' ] ); echo '</pre>';
 ?>
 <div class="donate-process">
   <div class="donate-process__text">
@@ -20,4 +20,5 @@ echo '<pre>'; print_r( $cause_meta_data[ 'donors' ] ); echo '</pre>';
       <div class="__bar_highlight" style="width: <?php echo $cause_meta_data[ 'percent' ]; ?>%"></div>
     </div>
   </div>
+  <?php hopes_the_donor_list_html( $cause_meta_data[ 'donors' ] ); ?>
 </div>

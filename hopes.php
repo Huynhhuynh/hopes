@@ -40,6 +40,7 @@ require( __DIR__ . '/vendor/autoload.php' );
   /**
    * Admin
    */
+  require( HOPES_DIR . '/inc/custom-role.php' );
   require( HOPES_DIR . '/inc/options.php' );
   require( HOPES_DIR . '/inc/admin/welcome.php' );
   require( HOPES_DIR . '/inc/admin/cause-cpt.php' );

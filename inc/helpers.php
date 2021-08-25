@@ -250,8 +250,16 @@ function hopes_get_donors_by_cause( $cause_id = 0 ) {
   return $donors;
 }
 
+/**
+ * Get donor
+ * 
+ * @param Int $donor_id
+ */
 function hopes_get_donor( $donor_id = 0 ) {
-
+  $donor = get_post( $donor_id );
+  return apply_filters( 'hopes/donor_result', [
+    'ID' => (int) $donor_id,
+    ] );
 }
 
 /**
@@ -261,7 +269,6 @@ function hopes_get_donor( $donor_id = 0 ) {
  * @return Int 
  */
 function hopes_cause_get_total_donate( $cause_id = 0 ) {
-  // query here!
   $donations = hopes_query_donations_by_cause( $cause_id ); 
   if( $donations && count( $donations ) > 0 ) {
     return (float) array_sum( array_map( function( $d ) { return (float) $d->donation_amount; }, $donations ) );
@@ -493,4 +500,19 @@ function hopes_get_donation( $paged = 1, $s = [], $post_status = 'any' ) {
 function hopes_donor_the_donation_table_result_item( $donation_id ) {
   set_query_var( 'donation_id', $donation_id );
   load_template( hopes_template_path( 'admin/donor-donation-table-result-item.php' ), false );
+}
+
+/**
+ * Donor list template 
+ * 
+ * @param Array $donors
+ * @param Int $showing
+ * 
+ * @return Html
+ */
+function hopes_the_donor_list_html( $donors = [], $showing = 6 ) {
+  if( ! $donors || count( $donors ) <= 0 ) return;
+  set_query_var( 'donors', $donors );
+  set_query_var( 'showing', $showing );
+  load_template( hopes_template_path( 'donor-list.php' ), false );
 }
