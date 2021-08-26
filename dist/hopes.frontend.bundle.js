@@ -10,6 +10,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/donation-form.js":
+/*!******************************!*\
+  !*** ./src/donation-form.js ***!
+  \******************************/
+/***/ (function(module) {
+
+eval("\n\n/**\r\n * Donation form \r\n * \r\n */\n;\n\n(function (w, $) {\n  'use strict';\n})(window, jQuery);\n\nmodule.exports = {};\n\n//# sourceURL=webpack://hopes/./src/donation-form.js?");
+
+/***/ }),
+
 /***/ "./src/scss/main.scss":
 /*!****************************!*\
   !*** ./src/scss/main.scss ***!
@@ -62,7 +72,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /*!*********************!*\
   !*** ./src/main.js ***!
   \*********************/
-eval("\n\n__webpack_require__(/*! ./scss/main.scss */ \"./src/scss/main.scss\");\n\n/**\r\n * Hopes main javascript\r\n * \r\n * @version 1.0.0\r\n * @package Hopes\r\n */\n(function (w, $) {\n  'use strict';\n\n  var Ready = function Ready() {};\n  /**\r\n   * DOM Ready\r\n   */\n\n\n  $(Ready);\n})(window, jQuery);\n\n//# sourceURL=webpack://hopes/./src/main.js?");
+eval("\n\n__webpack_require__(/*! ./scss/main.scss */ \"./src/scss/main.scss\");\n\n__webpack_require__(/*! ./donation-form */ \"./src/donation-form.js\");\n\n/**\r\n * Hopes main javascript\r\n * \r\n * @version 1.0.0\r\n * @package Hopes\r\n */\n;\n\n(function (w, $) {\n  'use strict';\n\n  var Ready = function Ready() {};\n  /**\r\n   * DOM Ready\r\n   */\n\n\n  $(Ready);\n})(window, jQuery);\n\n//# sourceURL=webpack://hopes/./src/main.js?");
 }();
 /******/ })()
 ;

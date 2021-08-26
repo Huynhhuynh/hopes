@@ -5,6 +5,7 @@
 }
 
 .donate-process {
+  margin-bottom: 2em;
 
   &__text {
     margin-bottom: .5em;
@@ -36,7 +37,9 @@
 }
 
 .donor-list {
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 
   &__ul {
     margin: 0;
@@ -57,7 +60,7 @@
     box-shadow: 2px 3px 8px 0 rgb(1 1 1 / 15%);
 
     &:not(:first-child) {
-      margin-left: -20%;
+      margin-left: -20px;
     }
   }
 
@@ -69,5 +72,9 @@
       width: 100%;
       border-radius: 100%;
     }
+  }
+
+  .total-donors {
+    margin-left: 15px;
   }
 }

@@ -50,7 +50,7 @@ function hopes_cause_donation_options_tab_register( $tabs = [] ) {
             'value' => 'set-donation'
           ]
         ] ),
-        Field::make( 'complex', 'cause_donation_amount_levels', __( 'Donation Amount Levels', 'hopes' ) )
+      Field::make( 'complex', 'cause_donation_amount_levels', __( 'Donation Amount Levels', 'hopes' ) )
         ->set_layout( 'tabbed-vertical' )
         ->add_fields( [
           Field::make( 'text', 'amount', __( 'Amount', 'hopes' ) )

@@ -5,10 +5,11 @@
  * @package Hopes
  */
 
-import './scss/main.scss'
+import './scss/main.scss';
+import './donation-form';
 
 ;( ( w, $ ) => {
-  'use strict'
+  'use strict';
 
   const Ready = () => {
 
@@ -17,6 +18,6 @@ import './scss/main.scss'
   /**
    * DOM Ready
    */
-  $( Ready )
+  $( Ready );
 
 } )( window, jQuery )

@@ -1,12 +1,16 @@
 .single {
 
-  article.cause  {
+  article.hopes-cause  {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
     .cause-entry-container {
-      display: flex;
-      flex-wrap: wrap;
+      width: 65%;
+    }
 
-
+    .single-cause-sidebar {
+      width: 30%;
     }
 
     .cause-heading {
@@ -15,13 +19,27 @@
     }
 
     .cause-entry-container {
-      width: 70%;
+
+      .cause-title {
+
+        .post-term {
+          font-size: 14px;
+        }
+      }
       
       .post-title {
-        margin-top: 6px;
-        margin-bottom: 14px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        line-height: 1.5em;
       }
     }
   }
 }
 
+.single-cause-sidebar {
+
+  &__inner {
+    position: sticky;
+    top: 55px;
+  }
+}

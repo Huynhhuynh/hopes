@@ -516,3 +516,51 @@ function hopes_the_donor_list_html( $donors = [], $showing = 6 ) {
   set_query_var( 'showing', $showing );
   load_template( hopes_template_path( 'donor-list.php' ), false );
 }
+
+function hopes_cause_content() {
+  ?>
+  <div class="cause-content">
+    <?php the_content(); ?>
+  </div>
+  <?php 
+}
+
+function hopes_cause_single_sidebar( $cause_id = 0 ) {
+  set_query_var( 'cause_id', $cause_id );
+  load_template( hopes_template_path( 'single-cause-sidebar.php' ), false );
+}
+
+/**
+ * Get cause 
+ * 
+ * @param Int $cause
+ * @return Object 
+ */
+function hopes_get_cause( $cause_id = 0 ) {
+  $cause = get_post( $cause_id );
+  if( $cause == null ) return null;
+
+  $cause->donation_form_opts = [
+    'cause_donation_option' => carbon_get_post_meta( $cause_id, 'cause_donation_option' ),
+    'cause_amount_donation' => carbon_get_post_meta( $cause_id, 'cause_amount_donation' ),
+    'cause_donation_amount_levels' => carbon_get_post_meta( $cause_id, 'cause_donation_amount_levels' ),
+    'couse_custom_amount' => carbon_get_post_meta( $cause_id, 'couse_custom_amount' ),
+    'cause_min_amount_limit' => carbon_get_post_meta( $cause_id, 'cause_min_amount_limit' ),
+    'cause_max_amount_limit' => carbon_get_post_meta( $cause_id, 'cause_max_amount_limit' ),
+    'cause_custom_amount_text' => carbon_get_post_meta( $cause_id, 'cause_custom_amount_text' ),
+    'cause_donation_goal' => carbon_get_post_meta( $cause_id, 'cause_donation_goal' ),
+    'couse_target_donation_amount' => carbon_get_post_meta( $cause_id, 'couse_target_donation_amount' ),
+    'cause_goal_achieved_message' => carbon_get_post_meta( $cause_id, 'cause_goal_achieved_message' ),
+  ];
+  
+  return $cause;
+}
+
+function hopes_donation_form( $cause_id ) {
+  $cause = hopes_get_cause( $cause_id );
+  if( $cause == null ) return;
+
+  set_query_var( 'cause', $cause );
+  set_query_var( 'donation_form_opts', $cause->donation_form_opts );
+  load_template( hopes_template_path( 'donation-form.php' ), false );
+}

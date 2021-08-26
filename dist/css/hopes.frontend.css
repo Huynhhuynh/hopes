@@ -4,6 +4,9 @@
   margin: 0 auto;
 }
 
+.donate-process {
+  margin-bottom: 2em;
+}
 .donate-process__text {
   margin-bottom: 0.5em;
 }
@@ -29,7 +32,9 @@
 }
 
 .donor-list {
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 .donor-list__ul {
   margin: 0;
@@ -49,7 +54,7 @@
   box-shadow: 2px 3px 8px 0 rgba(1, 1, 1, 0.15);
 }
 .donor-list__item:not(:first-child) {
-  margin-left: -20%;
+  margin-left: -20px;
 }
 .donor-list__item-avatar {
   width: 100%;
@@ -59,19 +64,35 @@
   width: 100%;
   border-radius: 100%;
 }
+.donor-list .total-donors {
+  margin-left: 15px;
+}
 
-.single article.cause .cause-entry-container {
+.single article.hopes-cause {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
-.single article.cause .cause-heading {
+.single article.hopes-cause .cause-entry-container {
+  width: 65%;
+}
+.single article.hopes-cause .single-cause-sidebar {
+  width: 30%;
+}
+.single article.hopes-cause .cause-heading {
   width: 100%;
   margin-bottom: 3em;
 }
-.single article.cause .cause-entry-container {
-  width: 70%;
+.single article.hopes-cause .cause-entry-container .cause-title .post-term {
+  font-size: 14px;
 }
-.single article.cause .cause-entry-container .post-title {
-  margin-top: 6px;
-  margin-bottom: 14px;
+.single article.hopes-cause .cause-entry-container .post-title {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  line-height: 1.5em;
+}
+
+.single-cause-sidebar__inner {
+  position: sticky;
+  top: 55px;
 }

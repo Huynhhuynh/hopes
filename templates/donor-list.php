@@ -15,4 +15,5 @@
     </li>
     <?php } ?>
   </ul>
+  <span class="total-donors"><?php echo sprintf( _n( '%s donor', '%s donors', count( $donors ), 'hopes' ), count( $donors ) ); ?></span>
 </div>
