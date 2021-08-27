@@ -564,3 +564,12 @@ function hopes_donation_form( $cause_id ) {
   set_query_var( 'donation_form_opts', $cause->donation_form_opts );
   load_template( hopes_template_path( 'donation-form.php' ), false );
 }
+
+function hopes_register_payment_methods() {
+  $payment_methods = apply_filters( 'hopes/payment_methods', [
+    'test_donation' => [],
+    'offline_donation' => [],
+    'paypal' => []
+  ] );
+  return $payment_methods;
+}
