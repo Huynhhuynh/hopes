@@ -85,7 +85,7 @@ function hopes_cause_donation_options_tab_register( $tabs = [] ) {
             'value' => 'multi-level-donation'
           ]
         ] ),
-      Field::make( 'checkbox', 'couse_custom_amount', __( 'Enable Custom Amount', 'hopes' ) )
+      Field::make( 'checkbox', 'cause_custom_amount', __( 'Enable Custom Amount', 'hopes' ) )
         ->set_default_value( true )
         ->set_help_text( __( 'Do you want the user to be able to input their own donation amount?' ) )
         ->set_width( 25 ),
@@ -96,7 +96,7 @@ function hopes_cause_donation_options_tab_register( $tabs = [] ) {
         ->set_help_text( __( 'Set the minimum amount for all gateways.', 'hopes' ) )
         ->set_conditional_logic( [
           [
-            'field' => 'couse_custom_amount',
+            'field' => 'cause_custom_amount',
             'value' => true
           ]
         ] ),
@@ -107,7 +107,7 @@ function hopes_cause_donation_options_tab_register( $tabs = [] ) {
         ->set_help_text( __( 'Set the maximum amount for all gateways.', 'hopes' ) )
         ->set_conditional_logic( [
           [
-            'field' => 'couse_custom_amount',
+            'field' => 'cause_custom_amount',
             'value' => true
           ]
         ] ),
@@ -117,7 +117,7 @@ function hopes_cause_donation_options_tab_register( $tabs = [] ) {
         ->set_width( 25 )
         ->set_conditional_logic( [
           [
-            'field' => 'couse_custom_amount',
+            'field' => 'cause_custom_amount',
             'value' => true
           ]
         ] ),

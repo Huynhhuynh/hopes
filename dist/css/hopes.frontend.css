@@ -121,6 +121,11 @@
   border-radius: 4px;
   background: white;
 }
+.donation-form-wrap.__default .donation-amount {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: solid 1px #e1e1e1;
+}
 .donation-form-wrap.__default .donor-infomation .__first-name,
 .donation-form-wrap.__default .donor-infomation .__last-name {
   width: calc(50% - 5px);
@@ -130,4 +135,54 @@
 }
 .donation-form-wrap.__default .donor-infomation .__last-name {
   float: right;
+}
+
+.donation-amount-multi-level .donation-amount-custom-input {
+  position: relative;
+  margin-bottom: 10px;
+}
+.donation-amount-multi-level .donation-amount-custom-input .currency-symbols {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 40px;
+}
+.donation-amount-multi-level .donation-amount-custom-input input[name=donation-amount] {
+  padding-left: 40px;
+}
+.donation-amount-multi-level .amount-level {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+.donation-amount-multi-level .amount-level__item {
+  margin: 0 5px 5px 0;
+  list-style: none;
+}
+.donation-amount-multi-level .amount-level__item label {
+  margin: 0;
+  cursor: pointer;
+}
+.donation-amount-multi-level .amount-level__item label input[type=radio] {
+  display: none;
+}
+.donation-amount-multi-level .amount-level__item label input[name=donation-amount-select]:checked + .amount-level__item-amount {
+  background: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+.donation-amount-multi-level .amount-level__item-amount {
+  display: inline-block;
+  padding: 6px 10px;
+  border: solid 1px #e1e1e1;
+  border-radius: 3px;
+  font-weight: normal;
+  font-size: 14px;
+  transform: 0.3s ease;
+  -webkit-transform: 0.3s ease;
 }

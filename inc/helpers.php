@@ -321,6 +321,11 @@ function hopes_get_price( $num = 0, $currency = null ) {
     $currency_pos_temp[ $currency_opts[ 'position' ] ] );
 }
 
+function hopes_global_currency_info() {
+  $currency = carbon_get_theme_option( 'hopes_currency' );
+  return hopes_get_currency( $currency );
+}
+
 /**
  * Get percent 
  * 
@@ -544,7 +549,7 @@ function hopes_get_cause( $cause_id = 0 ) {
     'cause_donation_option' => carbon_get_post_meta( $cause_id, 'cause_donation_option' ),
     'cause_amount_donation' => carbon_get_post_meta( $cause_id, 'cause_amount_donation' ),
     'cause_donation_amount_levels' => carbon_get_post_meta( $cause_id, 'cause_donation_amount_levels' ),
-    'couse_custom_amount' => carbon_get_post_meta( $cause_id, 'couse_custom_amount' ),
+    'cause_custom_amount' => carbon_get_post_meta( $cause_id, 'cause_custom_amount' ),
     'cause_min_amount_limit' => carbon_get_post_meta( $cause_id, 'cause_min_amount_limit' ),
     'cause_max_amount_limit' => carbon_get_post_meta( $cause_id, 'cause_max_amount_limit' ),
     'cause_custom_amount_text' => carbon_get_post_meta( $cause_id, 'cause_custom_amount_text' ),
@@ -572,4 +577,14 @@ function hopes_register_payment_methods() {
     'paypal' => []
   ] );
   return $payment_methods;
+}
+
+/**
+ * 
+ */
+function hopes_donation_amount_multi_level_layout( $levels, $opts ) {
+  set_query_var( 'levels', $levels );
+  set_query_var( 'options', $opts );
+  set_query_var( 'global_currency_info', hopes_global_currency_info() );
+  load_template( hopes_template_path( 'donation-amount-multi-level.php', false ) );
 }
