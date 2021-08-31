@@ -9,7 +9,7 @@
 // var_dump( $global_currency_info[ 'symbol' ] );
 ?>
 <div class="donation-amount-multi-level">
-  <label><?php _e( 'Amount', 'hopes' ) ?></label>
+  <h4 class="donation-form__label"><?php _e( 'Amount', 'hopes' ) ?></h4>
   <div class="donation-amount-custom-input">
     <div class="currency-symbols"><?php echo $global_currency_info[ 'symbol' ]; ?></div>
     <input type="number" name="donation-amount" placeholder="<?php _e( 'Enter amount', 'hopes' ) ?>">

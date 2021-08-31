@@ -9,7 +9,7 @@
   <ul class="donor-list__ul">
     <?php foreach( $donors as $index => $donor ) { ?>
     <li class="donor-list__item">
-      <div class="donor-list__item-avatar">
+      <div class="donor-list__item-avatar" title="<?php echo $donor[ 'donor_display_name' ]; ?>">
         <?php echo $donor[ 'donor_avatar' ]; ?>
       </div>
     </li>

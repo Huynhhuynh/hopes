@@ -21,6 +21,11 @@
       border: solid 1px #E1E1E3;
       border-radius: 4px;
       background: white;
+
+      &__label {
+        font-size: 16px;
+        margin: 0 0 15px;
+      }
     }
 
     .donation-amount {

@@ -220,6 +220,7 @@ function hopes_get_donors_by_cause( $cause_id = 0 ) {
     $donor_id = (int) $d->donation_donor_id;
     $donor_user = carbon_get_post_meta( $donor_id, 'donor_user' );
     $donor_email = carbon_get_post_meta( $donor_id, 'donor_email' );
+    [ $first_name, $last_name ] = [ carbon_get_post_meta( $donor_id, 'donor_first_name' ), carbon_get_post_meta( $donor_id, 'donor_last_name' ) ];
     $donor_avatar = '';
     $donor_avatar_url = '';
 
@@ -236,6 +237,7 @@ function hopes_get_donors_by_cause( $cause_id = 0 ) {
       'donor_user' => $donor_user,
       'donor_first_name' => carbon_get_post_meta( $donor_id, 'donor_first_name' ),
       'donor_last_name' => carbon_get_post_meta( $donor_id, 'donor_last_name' ),
+      'donor_display_name' => $first_name . ' ' . $last_name,
       'donor_email' => carbon_get_post_meta( $donor_id, 'donor_email' ),
       'donor_phone' => carbon_get_post_meta( $donor_id, 'donor_phone' ),
       'donor_url' => carbon_get_post_meta( $donor_id, 'donor_url' ),
@@ -335,6 +337,8 @@ function hopes_global_currency_info() {
  * @return Float 
  */
 function hopes_get_percent( $target = 0, $achieved = 0 ) {
+  if( $target == 0 ) return 0;
+
   $percent = ($achieved / $target ) * 100;
   return $percent > 100 ? 100 : number_format( $percent, 2 );
 }
@@ -348,11 +352,15 @@ function hopes_get_percent( $target = 0, $achieved = 0 ) {
  */
 function hopes_cause_donate_process_template( $post_id ) {
 
-  $target = carbon_get_post_meta( $post_id, 'couse_target_donation_amount' );
+  $enable_goal = carbon_get_post_meta( $post_id, 'cause_donation_goal' );
+  $target = carbon_get_post_meta( $post_id, 'cause_target_donation_amount' );
   $total = hopes_cause_get_total_donate( $post_id );
   $donors = hopes_get_donors_by_cause( $post_id );
 
+  if( ! $target ) { $target = 0; }
+
   $cause_meta_data = [
+    'enable_goal' => $enable_goal,
     'done' => false,
     'target_donate' => $target,
     'total_donated' => $total,
@@ -363,6 +371,22 @@ function hopes_cause_donate_process_template( $post_id ) {
 
   set_query_var( 'cause_meta_data', $cause_meta_data );
   load_template( hopes_template_path( 'cause-donate-process.php' ), false );
+}
+
+/**
+ * Donate process bar html 
+ * 
+ * @param Int $percent_compelted
+ * @return Html
+ */
+function hopes_donate_process_bar_html( $percent_completed = 0 ) {
+  ?>
+  <div class="donate-process__bar">
+    <div class="__bar">
+      <div class="__bar_highlight" style="width: <?php echo $percent_completed; ?>%"></div>
+    </div>
+  </div>
+  <?php 
 }
 
 /**

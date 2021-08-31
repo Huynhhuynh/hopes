@@ -139,9 +139,9 @@ function hopes_cause_donation_goal_tab_register( $tabs ) {
     'name' => __( 'Donation Goal', 'hopes' ),
     'fields' => [
       Field::make( 'checkbox', 'cause_donation_goal', __( 'Enable Donation Goal', 'hopes' ) )
-        ->set_default_value( false )
+        ->set_default_value( true )
         ->set_help_text( __( 'Enable donation goal for this cause.', 'hopes' ) ),
-      Field::make( 'text', 'couse_target_donation_amount', __( 'Target Donation Amount', 'hopes' ) )
+      Field::make( 'text', 'cause_target_donation_amount', __( 'Target Donation Amount', 'hopes' ) )
         ->set_default_value( 1000 )
         ->set_attribute( 'type', 'number' )
         ->set_help_text( __( 'Set the total number of donations as a goal.', 'hopes' ) )
