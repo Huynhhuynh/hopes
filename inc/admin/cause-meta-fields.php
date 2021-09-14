@@ -112,7 +112,7 @@ function hopes_cause_donation_options_tab_register( $tabs = [] ) {
           ]
         ] ),
       Field::make( 'text', 'cause_custom_amount_text', __( 'Custom Amount Text', 'hopes' ) )
-        ->set_default_value( __( 'Custom Amount', 'hopes' ) )
+        ->set_default_value( __( 'Other', 'hopes' ) )
         ->set_help_text( __( 'This text appears as a label below the custom amount field for set donation cause.', 'hopes' ) )
         ->set_width( 25 )
         ->set_conditional_logic( [

@@ -596,9 +596,16 @@ function hopes_donation_form( $cause_id ) {
 
 function hopes_register_payment_methods() {
   $payment_methods = apply_filters( 'hopes/payment_methods', [
-    'test_donation' => [],
-    'offline_donation' => [],
-    'paypal' => []
+    'test_donation' => [
+      'label' => __( 'Test Donation', 'hopes' )
+    ],
+    'offline_donation' => [
+      'label' => __( 'Offline Donation', 'hopes' )
+    ],
+    'paypal' => [
+      'label' => __( 'Paypal' ),
+      'brand' => '',
+    ]
   ] );
   return $payment_methods;
 }
@@ -612,3 +619,4 @@ function hopes_donation_amount_multi_level_layout( $levels, $opts ) {
   set_query_var( 'global_currency_info', hopes_global_currency_info() );
   load_template( hopes_template_path( 'donation-amount-multi-level.php', false ) );
 }
+

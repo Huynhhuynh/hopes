@@ -35,6 +35,7 @@ require( __DIR__ . '/vendor/autoload.php' );
   require( HOPES_DIR . '/inc/static.php' );
   require( HOPES_DIR . '/inc/hooks.php' );
   require( HOPES_DIR . '/inc/helpers.php' );
+  require( HOPES_DIR . '/inc/template-tags.php' );
   require( HOPES_DIR . '/inc/ajax.php' );
 
   /**
