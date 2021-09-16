@@ -30,13 +30,25 @@ function hopes_donation_form_donor_infomation() {
     <?php } else { ?>
       <?php echo $login_text; ?>
       <div class="hopes-form__field __first-name">
-        <input type="text" placeholder="<?php _e( 'First Name', 'hopes' ) ?>">
+        <input 
+          type="text" 
+          placeholder="<?php _e( 'First Name', 'hopes' ) ?>" 
+          name="first-name"
+          data-validate="not-empty">
       </div>
       <div class="hopes-form__field __last-name">
-        <input type="text" placeholder="<?php _e( 'Last Name', 'hopes' ) ?>">
+        <input 
+          type="text" 
+          placeholder="<?php _e( 'Last Name', 'hopes' ) ?>" 
+          name="last-name"
+          data-validate="not-empty">
       </div>
       <div class="hopes-form__field __email">
-        <input type="email" placeholder="<?php _e( 'Email', 'hopes' ) ?>">
+        <input 
+          type="email" 
+          placeholder="<?php _e( 'Email', 'hopes' ) ?>" 
+          name="email"
+          data-validate="not-empty,email">
       </div>
     <?php } ?>
   </div>
@@ -65,6 +77,11 @@ function hopes_donation_form_payment( $cause_id = 0 ) {
             <span class="__radio-ui"></span>
           </div>
           <div><?php echo $payment[ 'label' ] ?></div>
+          <?php if( isset( $payment[ 'brand' ] ) && ! empty( $payment[ 'brand' ] ) ) { ?>
+          <span class="payment-brand">
+            <?php echo $payment[ 'brand' ] ?>
+          </span>
+          <?php } ?>
         </label>
       </li>
     <?php } ?>

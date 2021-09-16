@@ -19,6 +19,17 @@ function hopes_template_path_apply_filter( $full_path = '', $path = '' ) {
 }
 
 /**
+ * SVG icons 
+ * 
+ * @param String $name
+ * @return SVG
+ */
+function hopes_svg( $name = '' ) {
+  $svgs = require( HOPES_DIR . '/inc/svg.php' );
+  return  $svgs[ $name ] ? $svgs[ $name ] : '';
+}
+
+/**
  * Template path 
  * 
  * @param String $path 
@@ -604,7 +615,7 @@ function hopes_register_payment_methods() {
     ],
     'paypal' => [
       'label' => __( 'Paypal' ),
-      'brand' => '',
+      'brand' => hopes_svg( 'paypal' ), // svg or iamge tag
     ]
   ] );
   return $payment_methods;

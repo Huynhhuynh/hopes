@@ -14,11 +14,15 @@ export function hopes_pagination_render( el, params, callback ) {
     autoHidePrevious: true,
     autoHideNext: true,
     callback: ( data, pagination ) => {
-      console.log( pagination )
+      // console.log( pagination )
       if( callback ) callback.call( null, { data, pagination } )
     }
   }
 
   $wrap.empty();
   $wrap.pagination( args )
+}
+
+export function hopes_price_format( num = 0, digits = 2 ) {
+  return Number.parseFloat( num ).toFixed( digits );
 }

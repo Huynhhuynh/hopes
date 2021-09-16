@@ -12,7 +12,11 @@
   <h4 class="donation-form__label"><?php _e( 'Amount', 'hopes' ) ?></h4>
   <div class="donation-amount-custom-input">
     <div class="currency-symbols"><?php echo $global_currency_info[ 'symbol' ]; ?></div>
-    <input type="number" name="donation-amount" placeholder="<?php _e( 'Enter amount', 'hopes' ) ?>">
+    <input 
+      type="number" 
+      name="donation-amount" 
+      placeholder="<?php _e( 'Enter amount', 'hopes' ) ?>"
+      data-validate="not-empty,number">
   </div>
   <ul class="amount-level">
     <?php foreach( $levels as $index => $level ) { ?>

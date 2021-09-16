@@ -74,11 +74,22 @@
 .hopes-form__padding {
   padding: 20px;
 }
+.hopes-form__step {
+  display: none;
+}
+.hopes-form__step--active {
+  display: block;
+}
+
 .hopes-button {
   display: inline-block;
   text-decoration: none;
 }
 
+.hopes-radio-custom-ui {
+  line-height: 0;
+  cursor: pointer;
+}
 .hopes-radio-custom-ui .__radio-ui {
   position: relative;
   display: inline-block;
@@ -89,30 +100,16 @@
   background: #fafafa;
   transition: 0.3s ease;
   -webkit-transition: 0.3s ease;
-}
-.hopes-radio-custom-ui .__radio-ui:after {
-  content: "";
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  border-radius: 50%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  background: #fafafa;
-  transition: 0.3s ease;
-  -webkit-transition: 0.3s ease;
-  z-index: 2;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .hopes-radio-custom-ui input[type=radio] {
   display: none;
 }
 .hopes-radio-custom-ui input[type=radio]:checked + .__radio-ui {
-  border-color: #4caf50;
-}
-.hopes-radio-custom-ui input[type=radio]:checked + .__radio-ui:after {
-  background: #4caf50;
+  background-color: #4caf50;
+  background-image: url(../d1bebf77dea2925ea749b7f7782d19e6.svg);
 }
 
 .single article.hopes-cause {
@@ -272,4 +269,22 @@
   border-radius: 3px;
   border: solid 1px #ddd;
   background: white;
+}
+.doantion-payment-methods li.payment-method-item label {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  width: 100%;
+  font-weight: normal;
+}
+.doantion-payment-methods li.payment-method-item label .hopes-radio-custom-ui {
+  margin-right: 10px;
+}
+.doantion-payment-methods li.payment-method-item label .payment-brand {
+  margin-left: auto;
+  position: relative;
+}
+.doantion-payment-methods li.payment-method-item label .payment-brand svg, .doantion-payment-methods li.payment-method-item label .payment-brand img {
+  height: 16px;
+  width: auto;
 }

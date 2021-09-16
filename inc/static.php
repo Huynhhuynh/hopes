@@ -29,7 +29,10 @@ function hopes_admin_enqueue_scripts() {
   wp_enqueue_script( 'hopes-admin-script', HOPES_URI . '/dist/hopes.admin.bundle.js', [ 'jquery' ], HOPES_VER );  
   wp_localize_script( 'hopes-admin-script', 'HOPES_PHP_DATA', [
     'donation_custom_status' => hopes_donation_custom_status(),
-    'lang' => []
+    'lang' => [
+      'error_message_1' => __( 'Type your donation amount.', 'hopes' ),
+      'error_message_2' => __( 'Type your information.', 'hopes' ),
+    ]
   ] );
 }
 

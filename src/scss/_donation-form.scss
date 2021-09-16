@@ -171,5 +171,27 @@
     border-radius: 3px;
     border: solid 1px #ddd;
     background: white;
+
+    label {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      width: 100%;
+      font-weight: normal;
+
+      .hopes-radio-custom-ui {
+        margin-right: 10px;
+      }
+
+      .payment-brand {
+        margin-left: auto;
+        position: relative;
+        
+        svg, img {
+          height: 16px;
+          width: auto;
+        }
+      }
+    }
   }
 }
