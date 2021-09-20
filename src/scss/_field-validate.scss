@@ -1,0 +1,16 @@
+.hopes-validate-field {
+
+  &.__invalid {
+
+    input[type=text],
+    input[type=email],
+    input[type=tel],
+    input[type=number],
+    input[type=password],
+    input[type=search],
+    textarea,
+    select {
+      border: solid 1px red;
+    }
+  }
+}

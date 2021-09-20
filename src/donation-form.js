@@ -40,13 +40,15 @@ class HopesDonationForm_Default {
 
   pickAmountHandle() {
     const self = this;
+    let customEventChange = new CustomEvent('change');
 
-    this.$form.on( 'change', 'input[name=donation-amount-select]', ( e ) => {
+    this.$form.on( 'change', 'input[name=donation-amount-select]', e => {
       const value = e.target.value
       if( value == 'custom-amount' ) {
         self.$amountField.val( hopes_price_format ( '' ) ).focus()
       } else {
-        self.$amountField.val( value ).trigger( 'change' )
+        self.$amountField.val( value ).trigger('change');
+        self.$amountField[0].dispatchEvent(customEventChange);
       }
     } )
   }
@@ -55,12 +57,17 @@ class HopesDonationForm_Default {
     const self = this;
     return [
       // Step 1
-      () => {
+      () => { 
+        let pass = [];
         self.$form.find( '.hopes-form--first-step *[data-validate]' )
-          .each( ( index, field ) => {
-            const pass = HopesFieldValidate( $( field ) )
-            console.log( pass )
-          } )
+          .each((index, field) => {
+            const invalid = new HopesFieldValidate(field);
+            if(invalid?.pass) {
+              pass.push(invalid);
+            }
+          })
+
+        console.log(pass)
       },
       // Step 2
       () => {

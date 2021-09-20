@@ -288,3 +288,14 @@
   height: 16px;
   width: auto;
 }
+
+.hopes-validate-field.__invalid input[type=text],
+.hopes-validate-field.__invalid input[type=email],
+.hopes-validate-field.__invalid input[type=tel],
+.hopes-validate-field.__invalid input[type=number],
+.hopes-validate-field.__invalid input[type=password],
+.hopes-validate-field.__invalid input[type=search],
+.hopes-validate-field.__invalid textarea,
+.hopes-validate-field.__invalid select {
+  border: solid 1px red;
+}

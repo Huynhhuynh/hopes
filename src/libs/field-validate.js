@@ -1,8 +1,14 @@
-export default function HopesFieldValidate( $field ) {
-  const value = $field.val();
-  const validateTypes = $field.data( 'validate' ).split( ',' );
+export default function HopesFieldValidate(field) {
+  const value = field.value;
+  const validateTypes = field.dataset.validate.split( ',' );
   
-  let invalit = []
+  let invalid = [];
+  let actions = {};
+
+  let wrapper = document.createElement('DIV');
+  wrapper.classList.add('hopes-validate-field');
+  field.parentNode.insertBefore(wrapper, field);
+  wrapper.appendChild(field);
 
   const validateEmail = ( email ) => {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -13,7 +19,7 @@ export default function HopesFieldValidate( $field ) {
     switch( type ) {
       case 'not-empty':
         if( ! value.trim() ) {
-          invalit.push( {
+          invalid.push( {
             type,
             message: 'This field is required.'
           } )
@@ -22,7 +28,7 @@ export default function HopesFieldValidate( $field ) {
 
       case 'number':
         if( typeof (value - 0) !== 'number' ) {
-          invalit.push( {
+          invalid.push( {
             type,
             message: 'This field is number format.'
           } );
@@ -31,7 +37,7 @@ export default function HopesFieldValidate( $field ) {
       
       case 'email':
         if( ! validateEmail( value ) ) {
-          invalit.push( {
+          invalid.push( {
             type,
             message: 'This field is email format.'
           } );
@@ -43,9 +49,25 @@ export default function HopesFieldValidate( $field ) {
     }
   } );
 
-  return invalit.length ? {
+  actions.isInvalid = () => {
+    return invalid.length ? true : false;
+  }
+
+  if(actions.isInvalid()) {
+    wrapper.classList.add('__invalid')
+  } else {
+    wrapper.classList.remove('__invalid')
+  }
+
+  field.addEventListener('change', e => { 
+    wrapper.classList.remove('__invalid');
+  })
+
+  return invalid.length ? {
     pass: false,
-    field: $field,
-    invalit
-  } : true;
+    field,
+    wrapper,
+    invalid,
+    actions
+    } : true;
 }
