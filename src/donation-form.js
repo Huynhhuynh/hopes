@@ -2,7 +2,7 @@
  * Donation form 
  * 
  */
-import { hopes_price_format } from './helpers';
+import {hopes_price_format} from './helpers';
 import HopesFieldValidate from './libs/field-validate';
 
 class HopesDonationForm_Default {
@@ -17,11 +17,11 @@ class HopesDonationForm_Default {
     email: '',
   };
 
-  constructor( $form ) {
+  constructor($form) {
     this.$form = $form;
-    this.$amountField = $form.find( 'input[name=donation-amount]' );
-    this.loggedIn = parseInt( $form.find( 'input[name=donor-logged-in]' ).val() );
-    this.causeId = $form.find( 'input[name=cause-id]' ).val();
+    this.$amountField = $form.find('input[name=donation-amount]');
+    this.loggedIn = parseInt($form.find('input[name=donor-logged-in]').val());
+    this.causeId = $form.find('input[name=cause-id]').val();
 
     this.amountFieldTriggerOnChange();
     this.pickAmountHandle();
@@ -31,10 +31,10 @@ class HopesDonationForm_Default {
   amountFieldTriggerOnChange() {
     this.$amountField.on( 'change', ( e ) => {
       const currentValue = e.target.value;
-      this.$amountField.val( hopes_price_format( currentValue ) )
+      this.$amountField.val(hopes_price_format(currentValue))
 
       // set amount
-      this.currentAmount = parseFloat( currentValue );
+      this.currentAmount = parseFloat(currentValue);
     } )
   }
 
@@ -42,63 +42,75 @@ class HopesDonationForm_Default {
     const self = this;
     let customEventChange = new CustomEvent('change');
 
-    this.$form.on( 'change', 'input[name=donation-amount-select]', e => {
+    this.$form.on('change', 'input[name=donation-amount-select]', e => {
       const value = e.target.value
       if( value == 'custom-amount' ) {
         self.$amountField.val( hopes_price_format ( '' ) ).focus()
       } else {
-        self.$amountField.val( value ).trigger('change');
+        self.$amountField.val(value).trigger('change');
         self.$amountField[0].dispatchEvent(customEventChange);
       }
-    } )
+    })
   }
 
   stepValidate() {
     const self = this;
     return [
-      // Step 1
+      // Step 1 (donor infomation)
       () => { 
         let pass = [];
-        self.$form.find( '.hopes-form--first-step *[data-validate]' )
+        self.$form.find('.hopes-form--first-step *[data-validate]')
           .each((index, field) => {
-            const invalid = new HopesFieldValidate(field);
-            if(invalid?.pass) {
-              pass.push(invalid);
+            const _pass = HopesFieldValidate(field);
+            if(_pass != true) {
+              pass.push(_pass);
             }
           })
 
-        console.log(pass)
+        return pass.length ? pass : true;
       },
-      // Step 2
+      // Step 2 (select payment method)
       () => {
 
       }
     ]
   }
 
+  activeStepHandle() {
+    let activeStep = this.currentStep;
+    this.$form
+      .find(`.hopes-form--step-${activeStep}`)
+      .addClass('hopes-form__step--active')
+      .siblings()
+      .removeClass('hopes-form__step--active');
+  }
+
   nextStepHandle() {
     const self = this;
-    const $nextStepButton = this.$form.find( '.donation-button-continue' );
+    const $nextStepButton = this.$form.find('.donation-button-continue');
     
-    $nextStepButton.on( 'click', ( e ) => {
+    $nextStepButton.on('click', (e) => {
       e.preventDefault();
       const pass = self.stepValidate()[self.currentStep].call();
-      console.log(pass);
-    } )
+      if(pass == true) {
+        self.currentStep += 1;
+        self.activeStepHandle();
+      }
+    })
   }
 }
 
-;( ( w, $ ) => {
+;((w, $) => {
   'use strict';
   w.donationFormsAvailable = [];
 
-  $( () => {
-    $( 'form.donation-form.donation-form__default-handle' ).each( ( index, form ) => {
+  $(() => {
+    $('form.donation-form.donation-form__default-handle').each((index, form) => {
       const donationForm = new HopesDonationForm_Default( $( form ) );
       w.donationFormsAvailable.push( donationForm );
-    } )
-  } )
+    })
+  })
 
-} )( window, jQuery )
+})(window, jQuery)
 
 module.exports = {}

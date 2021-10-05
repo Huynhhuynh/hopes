@@ -9,7 +9,7 @@
   <h4 class="donation-form-title"><?php echo sprintf( __( 'Donate to "%s"', 'hopes' ), $cause->post_title ); ?></h4>
   <form action="" class="hopes-form donation-form donation-form__default-handle">
     <div class="hopes-form__padding">
-      <div class="hopes-form__step hopes-form--first-step hopes-form__step--active">
+      <div class="hopes-form__step hopes-form--first-step hopes-form--step-0 hopes-form__step--active">
         <div class="donation-amount">
           <?php if( $donation_form_opts[ 'cause_donation_option' ] == 'multi-level-donation' ) {
             hopes_donation_amount_multi_level_layout( $donation_form_opts[ 'cause_donation_amount_levels' ], [
@@ -24,7 +24,7 @@
         </div>
         <?php hopes_donation_form_donor_infomation(); ?>
       </div>
-      <div class="hopes-form__step hopes-form--second-step">
+      <div class="hopes-form__step hopes-form--second-step hopes-form--step-1">
         <h4 class="donation-form__label"><?php _e( 'Select Payment Method', 'hopes' ); ?></h4>
         <?php hopes_donation_form_payment(); ?>
       </div>

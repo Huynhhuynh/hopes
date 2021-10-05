@@ -63,7 +63,8 @@ export default function HopesFieldValidate(field) {
     wrapper.classList.remove('__invalid');
   })
 
-  return invalid.length ? {
+  let isInvalid = ((invalid.length > 0) ? true : false);
+  return isInvalid ? {
     pass: false,
     field,
     wrapper,
