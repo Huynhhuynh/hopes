@@ -107,7 +107,7 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
     'field_value' => 'action',
     'field_label' => 'label'
   ] ) );
-
+ 
   $email_system_settings = [
     'name' => __( 'Email', 'hopes' ),
     'fields' => [
