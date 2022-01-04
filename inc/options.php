@@ -145,11 +145,7 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
         ->set_default_value( hopes_set_default_email_template_global_settings() )
         ->set_header_template( '
         <% 
-<<<<<<< HEAD
           var __email_actions_register = '. wp_json_encode( hopes_email_actions_register() ) .'
-=======
-          var __email_actions_register = '. wp_json_encode( hopes_email_actions_register() ) .';
->>>>>>> d7d7b0a78b1b81e534e64488c748ab1e7d687453
         %>
         <% if (email_action) { %>
           <% 
