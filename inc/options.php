@@ -108,7 +108,7 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
   $email_system_settings = [
     'name' => __( 'Email', 'hopes' ),
     'fields' => [
-      Field::make( 'separator', 'hopes_email_donor_separator', __( 'Email Settings', 'hopes' ) ),
+      Field::make( 'separator', 'hopes_email_donor_separator', __( 'Email Template', 'hopes' ) ),
       Field::make( 'complex', 'hopes_email_template', __( 'Email Template Settings', 'hopes' ) )
         ->set_layout( 'tabbed-vertical' )
         ->add_fields( [
@@ -142,14 +142,13 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
         ->set_default_value( hopes_set_default_email_template_global_settings() )
         ->set_header_template( '
         <% 
-          var __email_actions_register = '. wp_json_encode( hopes_email_actions_register() ) .';
-          console.log( __email_actions_register )
+          var __email_actions_register = '. wp_json_encode( hopes_email_actions_register() ) .'
         %>
         <% if (email_action) { %>
           <% 
             var __email_action_name = __email_actions_register.find( o => { return o.action == email_action } )
           %>
-          <%- enable ? `🟢` : `🔴` %> <%- __email_action_name?.name %> (Subject: <%- email_subject %>)
+          <%- enable ? `🟢` : `🔴` %> <%- __email_action_name?.label %>
         <% } %>' )
     ]
   ];
