@@ -1,3 +1,301 @@
-body div {
-  color: black;
+.site-container {
+  width: 1120px;
+  max-width: calc(100% - 30px);
+  margin: 0 auto;
+}
+
+.donate-process {
+  margin-bottom: 2em;
+}
+.donate-process__text {
+  margin-bottom: 0.5em;
+}
+.donate-process__bar {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.donate-process__bar .__bar,
+.donate-process__bar .__bar_highlight {
+  border-radius: 20px;
+}
+.donate-process__bar .__bar {
+  width: 100%;
+  position: relative;
+  background: #ededed;
+  line-height: 0;
+}
+.donate-process__bar .__bar .__bar_highlight {
+  display: inline-block;
+  padding: 6px;
+  box-sizing: border-box;
+  background: #4caf50;
+}
+
+.donor-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.donor-list__ul {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.donor-list__item {
+  list-style: none;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 56px;
+  background: white;
+  border: solid 3px white;
+  box-shadow: 2px 3px 8px 0 rgba(1, 1, 1, 0.15);
+}
+.donor-list__item:not(:first-child) {
+  margin-left: -20px;
+}
+.donor-list__item-avatar {
+  width: 100%;
+  display: block;
+}
+.donor-list__item-avatar img {
+  width: 100%;
+  border-radius: 100%;
+}
+.donor-list .total-donors {
+  margin-left: 15px;
+}
+
+.hopes-form__field {
+  margin-bottom: 10px;
+}
+.hopes-form__padding {
+  padding: 20px;
+}
+.hopes-form__step {
+  display: none;
+}
+.hopes-form__step--active {
+  display: block;
+}
+
+.hopes-button {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.hopes-radio-custom-ui {
+  line-height: 0;
+  cursor: pointer;
+}
+.hopes-radio-custom-ui .__radio-ui {
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 18px;
+  border: solid 1px #ddd;
+  background: #fafafa;
+  transition: 0.3s ease;
+  -webkit-transition: 0.3s ease;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.hopes-radio-custom-ui input[type=radio] {
+  display: none;
+}
+.hopes-radio-custom-ui input[type=radio]:checked + .__radio-ui {
+  background-color: #4caf50;
+  background-image: url(../d1bebf77dea2925ea749b7f7782d19e6.svg);
+}
+
+.single article.hopes-cause {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.single article.hopes-cause .cause-entry-container {
+  width: 65%;
+}
+.single article.hopes-cause .single-cause-sidebar {
+  width: 30%;
+}
+.single article.hopes-cause .cause-heading {
+  width: 100%;
+  margin-bottom: 3em;
+}
+.single article.hopes-cause .cause-heading .cause-featured-image img {
+  width: 100%;
+}
+.single article.hopes-cause .cause-entry-container .cause-title .post-term {
+  font-size: 14px;
+}
+.single article.hopes-cause .cause-entry-container .post-title {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  line-height: 1.5em;
+}
+
+.donation-form-wrap.__default .donor-login-text {
+  font-size: 14px;
+  margin-bottom: 1em;
+}
+.donation-form-wrap.__default .donor-logout-text {
+  font-size: 14px;
+  margin-bottom: 0.5em;
+}
+.donation-form-wrap.__default .donation-form-title {
+  font-size: 0.9em;
+  line-height: 1.5em;
+}
+.donation-form-wrap.__default .donation-form {
+  border: solid 1px #ddd;
+  border-radius: 4px;
+  background: white;
+}
+.donation-form-wrap.__default .donation-form__label {
+  font-size: 16px;
+  margin: 0 0 15px;
+}
+.donation-form-wrap.__default .donation-form .donation-button-continue {
+  width: 100%;
+  border-radius: 0 0 4px 4px;
+}
+.donation-form-wrap.__default .donation-amount {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: solid 1px #ddd;
+}
+.donation-form-wrap.__default .donor-infomation .__first-name,
+.donation-form-wrap.__default .donor-infomation .__last-name {
+  width: calc(50% - 5px);
+}
+.donation-form-wrap.__default .donor-infomation .__first-name {
+  float: left;
+}
+.donation-form-wrap.__default .donor-infomation .__last-name {
+  float: right;
+}
+.donation-form-wrap.__default .donor-infomation .donor-tag {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: solid 1px #ddd;
+  background: #fafafa;
+  border-radius: 3px;
+  margin-bottom: 0.5em;
+}
+.donation-form-wrap.__default .donor-infomation .donor-tag .donor-avatar {
+  width: 50px;
+  min-width: 50px;
+  line-height: 0;
+  margin-right: 15px;
+}
+.donation-form-wrap.__default .donor-infomation .donor-tag .donor-avatar img {
+  border-radius: 50px;
+  width: 100%;
+}
+.donation-form-wrap.__default .donor-infomation .donor-tag .donor-common .donor-name {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+.donation-form-wrap.__default .donor-infomation .donor-tag .donor-common .donor-donate-total {
+  font-size: 12px;
+  color: #5a5a5a;
+}
+
+.donation-amount-multi-level .donation-amount-custom-input {
+  position: relative;
+  margin-bottom: 10px;
+}
+.donation-amount-multi-level .donation-amount-custom-input .currency-symbols {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 40px;
+}
+.donation-amount-multi-level .donation-amount-custom-input input[name=donation-amount] {
+  padding-left: 40px;
+}
+.donation-amount-multi-level .amount-level {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+.donation-amount-multi-level .amount-level__item {
+  margin: 0 5px 5px 0;
+  list-style: none;
+}
+.donation-amount-multi-level .amount-level__item label {
+  margin: 0;
+  cursor: pointer;
+}
+.donation-amount-multi-level .amount-level__item label input[type=radio] {
+  display: none;
+}
+.donation-amount-multi-level .amount-level__item label input[name=donation-amount-select]:checked + .amount-level__item-amount {
+  background: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+.donation-amount-multi-level .amount-level__item-amount {
+  display: inline-block;
+  padding: 6px 10px;
+  border: solid 1px #e1e1e1;
+  border-radius: 3px;
+  font-weight: normal;
+  font-size: 14px;
+  transform: 0.3s ease;
+  -webkit-transform: 0.3s ease;
+}
+
+.doantion-payment-methods {
+  margin: 0;
+  padding: 0;
+}
+.doantion-payment-methods li.payment-method-item {
+  list-style: none;
+  margin: 0 0 10px 0;
+  padding: 10px;
+  border-radius: 3px;
+  border: solid 1px #ddd;
+  background: white;
+}
+.doantion-payment-methods li.payment-method-item label {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  width: 100%;
+  font-weight: normal;
+}
+.doantion-payment-methods li.payment-method-item label .hopes-radio-custom-ui {
+  margin-right: 10px;
+}
+.doantion-payment-methods li.payment-method-item label .payment-brand {
+  margin-left: auto;
+  position: relative;
+}
+.doantion-payment-methods li.payment-method-item label .payment-brand svg, .doantion-payment-methods li.payment-method-item label .payment-brand img {
+  height: 16px;
+  width: auto;
+}
+
+.hopes-validate-field.__invalid input[type=text],
+.hopes-validate-field.__invalid input[type=email],
+.hopes-validate-field.__invalid input[type=tel],
+.hopes-validate-field.__invalid input[type=number],
+.hopes-validate-field.__invalid input[type=password],
+.hopes-validate-field.__invalid input[type=search],
+.hopes-validate-field.__invalid textarea,
+.hopes-validate-field.__invalid select {
+  border: solid 1px red;
 }

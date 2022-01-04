@@ -1,0 +1,81 @@
+/**
+ * Donor admin edit page donation table style 
+ */
+.donor-donation-table-entry {  
+  position: relative;
+  
+  &.is-loading {
+    
+    &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      background: rgba(255,255,255,.5);
+    }
+  }
+
+  input[list] {
+    padding: 0 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    line-height: 28px;
+    outline: none;
+    border-color: #8c8f94;
+    border-style: solid;
+    box-shadow: none;
+    border-width: 1px;
+
+    &::-webkit-calendar-picker-indicator {
+      display: none !important;
+    }
+
+    @media(max-width: 782px) {
+      padding: 5px 8px;
+    }
+  }
+
+  .filter-donation-bar {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0 15px 0;
+
+    > * {
+      margin-right: 30px;
+    }
+  }
+}
+
+/**
+ * Tag status style
+ */
+.hopes__tag {
+  padding: 3px 6px;
+  border-radius: 3px;
+  text-transform: capitalize;
+  border: solid 1px #8c8f94;
+  line-height: normal;
+  font-weight: 500;
+
+  &.is-complete {
+    background: #4caf50;
+    color: white;
+    border-color: #4caf50;
+  }
+
+  &.is-cancelled {
+    background: black;
+    color: white;
+    border-color: black;
+  }
+
+  &.is-failed {
+    background: #ff5722;
+    color: white;
+    border-color: #ff5722;
+  }
+}

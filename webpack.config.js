@@ -6,6 +6,7 @@ module.exports = {
   mode: 'development',
   entry: {
     frontend: [ './src/main.js' ],
+    admin: [ './src/admin.js' ],
   },
   output: {
     path: path.resolve( __dirname, 'dist' ),
@@ -35,10 +36,13 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
             loader: 'file-loader',
+            options: {
+              publicPath: '../'
+            }
           },
         ],
       },

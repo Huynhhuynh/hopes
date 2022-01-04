@@ -8,13 +8,13 @@ use Carbon_Fields\Field;
 /**
  * Register global settings panel
  */
-function crb_attach_theme_options() {
+function hopes_global_options() {
 
   $settings_global_tabs = apply_filters( 'hopes/settings_global_tabs', [] );
 
   $hopes_settings_object = Container::make( 'theme_options', __( 'Settings', 'hopes' ) )
     ->set_page_file( 'hopes-settings' )
-    ->set_page_parent( 'edit.php?post_type=cause' );
+    ->set_page_parent( 'edit.php?post_type=hopes-cause' );
 
   foreach( $settings_global_tabs as $index => $tab ) {
     $hopes_settings_object->add_tab( $tab[ 'name' ], $tab[ 'fields' ] );
@@ -23,7 +23,7 @@ function crb_attach_theme_options() {
   add_action( 'hopes/settings_global_object', $hopes_settings_object );
 }
 
-add_action( 'carbon_fields_register_fields', 'crb_attach_theme_options' );
+add_action( 'carbon_fields_register_fields', 'hopes_global_options' );
 
 /**
  * Global general settings tab
@@ -79,14 +79,17 @@ function hopes_settings_global_add_payment_geteways_tab( $tabs = [] ) {
   $payment_gateways_settings = [
     'name' => __( 'Payment Gateways', 'hopes' ),
     'fields' => [
-      Field::make( 'select', 'crb_select', __( 'Choose Options' ) )
-        ->set_options( array(
-          '1' => 1,
-          '2' => 2,
-          '3' => 3,
-          '4' => 4,
-          '5' => 5,
+      Field::make( 'complex', 'hopes_paypal_method', __( 'Slider' ) )
+        ->set_max( 1 )
+        ->add_fields( array(
+          Field::make( 'text', 'title', __( 'Slide Title' ) ),
+          Field::make( 'image', 'photo', __( 'Slide Photo' ) ),
         ) )
+        ->set_default_value( [
+          [
+            'title' => 'title',
+          ]
+        ] )
     ]
   ];
 
@@ -142,7 +145,11 @@ function hopes_settings_global_email_tab( $tabs = [] ) {
         ->set_default_value( hopes_set_default_email_template_global_settings() )
         ->set_header_template( '
         <% 
+<<<<<<< HEAD
           var __email_actions_register = '. wp_json_encode( hopes_email_actions_register() ) .'
+=======
+          var __email_actions_register = '. wp_json_encode( hopes_email_actions_register() ) .';
+>>>>>>> d7d7b0a78b1b81e534e64488c748ab1e7d687453
         %>
         <% if (email_action) { %>
           <% 

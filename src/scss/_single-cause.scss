@@ -1,0 +1,52 @@
+.single {
+
+  article.hopes-cause  {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .cause-entry-container {
+      width: 65%;
+    }
+
+    .single-cause-sidebar {
+      width: 30%;
+    }
+
+    .cause-heading {
+      width: 100%;
+      margin-bottom: 3em;
+
+      .cause-featured-image {
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    .cause-entry-container {
+
+      .cause-title {
+
+        .post-term {
+          font-size: 14px;
+        }
+      }
+      
+      .post-title {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        line-height: 1.5em;
+      }
+    }
+  }
+}
+
+.single-cause-sidebar {
+
+  &__inner {
+    // position: sticky;
+    // top: 55px;
+  }
+}

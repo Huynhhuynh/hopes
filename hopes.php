@@ -33,15 +33,23 @@ require( __DIR__ . '/vendor/autoload.php' );
    * Include
    */
   require( HOPES_DIR . '/inc/static.php' );
+  require( HOPES_DIR . '/inc/hooks.php' );
   require( HOPES_DIR . '/inc/helpers.php' );
+  require( HOPES_DIR . '/inc/template-tags.php' );
   require( HOPES_DIR . '/inc/ajax.php' );
 
   /**
    * Admin
    */
+  require( HOPES_DIR . '/inc/custom-role.php' );
   require( HOPES_DIR . '/inc/options.php' );
   require( HOPES_DIR . '/inc/admin/welcome.php' );
-  require( HOPES_DIR . '/inc/admin/custom-post-type.php' );
+  require( HOPES_DIR . '/inc/admin/cause-cpt.php' );
+  require( HOPES_DIR . '/inc/admin/donation-cpt.php' );
+  require( HOPES_DIR . '/inc/admin/donor-cpt.php' );
+  require( HOPES_DIR . '/inc/admin/cause-meta-fields.php' );
+  require( HOPES_DIR . '/inc/admin/donation-meta-fields.php' );
+  require( HOPES_DIR . '/inc/admin/donor-meta-fields.php' );
   require( HOPES_DIR . '/inc/admin/custom-tax.php' );
 }
 

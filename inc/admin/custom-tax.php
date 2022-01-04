@@ -37,7 +37,7 @@
       'rewrite'               => [ 'slug' => 'cause_tax' ]
     ];
 
-    register_taxonomy( 'cause_tax', 'cause', $args );
+    register_taxonomy( 'cause_tax', 'hopes-cause', $args );
   }
 
   add_action( 'init', 'hopes_register_cause_tax' );
@@ -49,6 +49,6 @@ add_action( 'admin_menu', function() {
     __( 'Categories', 'hopes' ),
     __( 'Categories', 'hopes' ),
     'manage_options',
-    'edit-tags.php?taxonomy=cause_tax&post_type=cause'
+    'edit-tags.php?taxonomy=cause_tax&post_type=hopes-cause'
   );
 } );

@@ -1,6 +1,140 @@
-body {
+.site-container {
+  width: $site-container-width;
+  max-width: calc(100% - 30px);
+  margin: 0 auto;
+}
+
+.donate-process {
+  margin-bottom: 2em;
+
+  &__text {
+    margin-bottom: .5em;
+  }
+
+  &__bar {
+    width: 100%;
+    margin-bottom: 15px;
+    
+    .__bar,
+    .__bar_highlight {
+      border-radius: 20px;
+    }
+
+    .__bar {
+      width: 100%;
+      position: relative;
+      background: #ededed;
+      line-height: 0;
   
-  div {
-    color: black;
+      .__bar_highlight {
+        display: inline-block;
+        padding: 6px;
+        box-sizing: border-box;
+        background: $accent-color;
+      }
+    }
+  } 
+}
+
+.donor-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &__ul {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    list-style: none;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 56px;
+    background: white;
+    border: solid 3px white;
+    box-shadow: 2px 3px 8px 0 rgb(1 1 1 / 15%);
+
+    &:not(:first-child) {
+      margin-left: -20px;
+    }
+  }
+
+  &__item-avatar {
+    width: 100%;
+    display: block;
+
+    img {
+      width: 100%;
+      border-radius: 100%;
+    }
+  }
+
+  .total-donors {
+    margin-left: 15px;
+  }
+}
+
+.hopes-form  {
+
+  &__field {
+    margin-bottom: 10px;
+  }
+
+  &__padding {
+    padding: 20px;
+  }
+
+  &__buttons {
+
+  }
+
+  &__step {
+    display: none;
+
+    &--active {
+      display: block;
+    }
+  }
+}
+
+.hopes-button {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.hopes-radio-custom-ui {
+  line-height: 0;
+  cursor: pointer;
+
+  .__radio-ui {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 18px;
+    border: solid 1px #ddd;
+    background: #fafafa;
+    transition: .3s ease;
+    -webkit-transition: .3s ease;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  input[type=radio] {
+    display: none;
+
+    &:checked {
+
+      + .__radio-ui {
+        background-color: $accent-color;
+        background-image: url(../../images/checked-white.svg);
+      }
+    }  
   }
 } 
